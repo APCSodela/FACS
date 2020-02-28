@@ -1,0 +1,66 @@
+<style>
+            .widget-user-2 .widget-user-header{
+    			padding:5px 15px 5px 15px;
+    			margin:0px;
+    		}
+    		.widget-user-2 .widget-user-image>img{
+    			width: 45px;
+    			height:auto;
+    			float:left;
+    			padding-top:5px;
+    		}
+    		.box{
+    		    position: relative;
+			    background: #ffffff;
+			    margin-bottom: 0px;
+			    width: 100%;
+    		}
+    		/*FACULTY CARD BORDER*/
+    		#facultyCard{
+		        border-top: 1px solid orange;
+		        
+			}
+    		
+    		.widget-user-2 .widget-user-username{
+    		    margin-top: 5px;
+			    margin-bottom: 5px;
+			    font-size: 22px;
+			    font-weight: 300;
+    		}
+    		.btn-box-tool {
+			    padding: 5px;
+			    font-size: 12px;
+			    background: transparent;
+			    color: #f6f6f6;
+			}
+			div.dataTables_wrapper div.dataTables_paginate {
+			    margin: 0px;
+			    white-space: nowrap;
+			    text-align: right;
+			}
+			.pagination{
+				margin:0px;
+			}
+			div.dataTables_wrapper div.dataTables_info {
+			    padding-top: 8px;
+			    white-space: nowrap;
+		    }
+		    /*FOR SEARCH BAR IN TABLE*/
+			div.dataTables_wrapper div.dataTables_filter {
+			    text-align: right;
+			}
+			/*FOR THE LENGTH*/
+			div.dataTables_wrapper div.dataTables_length label {
+			    font-weight: normal;
+			    text-align: left;
+			    white-space: nowrap;
+			}
+			.my-box-body{
+			    border-top-left-radius: 0;
+			    border-top-right-radius: 0;
+			    border-bottom-right-radius: 3px;
+			    border-bottom-left-radius: 3px;
+			    padding: 10px;
+			}
+    		
+        </style>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Attendance Recorded</title>
+</head>
+<body style="background-image: url('/dist/img/wp.jpg'); background-size:100%; background-repeat: no-repeat;">
+	<div align="center">
+		<h1>ATTENDANCE RECORDED</h1>
+		<br>
+		<p>CURRENT DATE AND TIME</p>
+	
+		<p>Date: <span th:text="${date}"></span></p>
+		<p>Time: <span th:text="${time}"></span></p> 
+		<p>Day: <span th:text="${day}"></span></p> 
+		<p>Time Difference: <span th:text="${timediff}"></span> Hours</p>
+	</div>
+</body>
+</html>

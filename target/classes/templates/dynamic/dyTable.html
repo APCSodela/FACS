@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dynamic Table</title>
+</head>
+<body>
+<h1>This is the dynamic Table</h1>
+	<ul>
+		<li>
+			<a href="/dynamic/home">Go back home</a>
+			<h2>Risk management</h2>
+		<form action="/dynamic/submit" method="POST">
+	        <table class="table table-striped" id="myTable">
+	            <tr>
+	                <th>Fields</th>
+	            </tr>
+	            <tr>
+	            	<button type="button" onclick="addFields()">Insert new row</button>
+	            </tr>
+	            
+	        </table>
+	        <button type="submit">Submit</button>
+        </form>
+		</li>
+	</ul>
+<script th:inline="javascript">
+
+    function addFields()
+    {
+        document.getElementById("myTable").insertRow(-1).innerHTML = 
+            '                <th><input name="input" type="text" /> </th>\n';
+    }
+
+</script>
+</body>
+</html>

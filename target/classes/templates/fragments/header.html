@@ -1,0 +1,49 @@
+<header class="main-header" th:fragment="header">
+
+    <!-- Logo -->
+    <div class="logo" style="background-color: #650006;">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><img class="img-responsive img-circle" src="../dist/img/facs-logo.png" alt="FACS LOGO"></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg" style="font-family: 'Agency FB'; font-size: 16px;"><strong>Faculty Attendance Checker System</strong></span>
+    </div>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation" style="background-color: maroon;">
+        <!-- Sidebar toggle button-->
+        <div class="sidebar-toggle" data-toggle="push-menu" role="button">
+        	<!-- FONT AWESOME MENU CONTENT -->
+        </div>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- User Account Menu -->
+                <li class="dropdown user user-menu">
+                    <!-- Menu Toggle Button -->
+                    <a class="dropdown-toggle" data-toggle="dropdown" style="font-size: 16px">
+                       &nbsp&nbsp<i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" style="border: none !important;">
+                        <!-- The user image in the menu -->
+                        <li class="user-header" style="background-color: #650006;">
+                            <img class="img-circle"  
+								th:src="@{${#authentication.principal.imagedata !=null } ? ${#authentication.principal.getIconImage()} : '/dist/img/default-50x50.gif'}"
+								alt="User Avatar">
+							<p>
+	                            <strong><span th:text="${#authentication.principal.fullname}">FULL NAME</span></strong>
+	                           	<br>
+	                           	<small style="text-transform: uppercase" th:text="${#authentication.principal.office}">OFFICE</small>
+                           	</p>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer" style="background-color: #4B3832;">
+                            <div style="text-align: center;">
+                                <a href="/logout" class="btn btn-block btn-flat" style="background-color: #202020; border-radius: 8px; color: white;'"><strong>LOGOUT</strong></a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

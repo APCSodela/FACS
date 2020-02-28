@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{layouts/default_layout}">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Faculties | View</title>
+	
+	    <th:block layout:fragment="local-styles">
+			<!-- JQuery DataTable Css -->
+			<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+			<!-- Custom JQueryDT Style -->
+			<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
+			<style>
+				.my-box-body{
+				    border-top-left-radius: 0;
+				    border-top-right-radius: 0;
+				    border-bottom-right-radius: 3px;
+				    border-bottom-left-radius: 3px;
+				    padding: 10px;
+				}
+				.widget-user-2 .widget-user-header{
+	    			padding:5px 15px 5px 15px;
+	    			margin:0px;
+	    		}
+	    		.widget-user-2 .widget-user-image>img{
+	    			width: 45px;
+	    			height:auto;
+	    			float:left;
+	    			padding-top:5px;
+	    		}
+	    		.box{
+	    		    position: relative;
+				    background: #ffffff;
+				    margin-bottom: 0px;
+				    width: 100%;
+	    		}
+	    		.widget-user-2 .widget-user-username{
+	    		    margin-top: 5px;
+				    margin-bottom: 5px;
+				    font-size: 22px;
+				    font-weight: 300;
+	    		}
+	    		.btn-box-tool {
+				    padding: 5px;
+				    font-size: 12px;
+				    background: transparent;
+				    color: #f6f6f6;
+				}
+			</style>
+	    </th:block>
+	</head>
+	<body>
+	<div class="content-wrapper" layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				Faculty
+			</h1>
+			<ol class="breadcrumb">
+				<li><i class="fa fa-dashboard"></i>Faculties</li>
+				<li class="active">View Faculties</li>
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content container-fluid">
+				<!--------------------------
+                  | Your Page Content Here |
+                  -------------------------->
+				<div class="box box-primary">
+					<div class="my-box-body table-responsive">
+						<table id="facultyTable" class="table table-bordered table-striped table-hover dataTable">
+			             	<thead>
+			             		<tr>
+			             			<th>
+			             				Faculties
+			             			</th>
+			             		</tr>
+			             	</thead>
+							<tbody>
+								<tr th:each="faculty: ${facultyList}">
+										<td>
+											<div class="col-md-12">
+												<!-- Widget: user widget style 1 -->
+												<div id="facultyCard" class="box box-widget widget-user-2 collapsed-box">
+													<!-- Add the bg color to the header using any of the bg-* classes -->
+													<div class="widget-user-header bg-light-blue">
+														<div class="widget-user-image">
+															<img class="img-circle"  th:src="@{${faculty.getImagedata()!=null} ? ${faculty.getIconImage()} : '/dist/img/default-50x50.gif'}" alt="User Avatar">
+														</div>
+		
+														<div class="box-tools pull-right">
+															<button id="trigger" type="button" class="btn btn-box-tool"
+																data-widget="collapse">
+																<i class="fa fa-plus"></i>
+															</button>
+															
+															<a th:href="@{'profile/' + ${faculty.id}}">
+																<button type="button" class="btn btn-box-tool">
+																	<i class="fa fa-user"></i>
+																</button>
+															</a>
+															
+															<a data-toggle="modal" th:attr="data-object-id=${faculty.id}, data-object-name=${faculty.fullname}, data-target='#modal-remove'">
+																<button type="button" class="btn btn-box-tool">
+																	<i class="fa fa-trash"></i>
+																</button>
+															</a>
+															<div class="modal modal-danger fade" id="modal-remove">
+													        	<div class="modal-dialog modal-sm">
+													            	<div class="modal-content">
+													            		<div class="modal-header" style="text-align: center; color: white;">
+																	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+																	    	<span class="modal-title"><strong>C O N F I R M A T I O N</strong></span>
+																      	</div>
+														              	<div class="modal-body">
+																			<p> 
+																				<!-- Changed using JavaScript -->
+																				Delete *Faculty Name* As Faculty
+																			</p>
+																		</div>
+																		<div class="modal-footer">
+															                <button type="button" class="btn btn-sm btn-outline pull-left" data-dismiss="modal">Close</button>
+															                <a type="button" id="confirmDelete">
+															                	<button type="button" class="btn btn-sm btn-outline"><strong>CONFIRM</strong></button>
+															                </a>
+														              	</div>
+													            	</div>
+													            	<!-- /.modal-content -->
+													          	</div>
+													          	<!-- /.modal-dialog -->
+												        	</div>
+													        <!-- /.modal -->
+														</div>
+														<!-- /.widget-user-image -->
+														<h4 th:text="${faculty.fullname}" class="widget-user-username">FACULTY FULLNAME</h4>
+														<h6 th:text="${faculty.department}" class="widget-user-desc">FACULTY DEPT</h6>
+													</div>
+													<div class="box-footer no-padding">
+														<ul class="nav nav-stacked">
+															<li><a href="#">EMPLOYEE ID <span th:text="${faculty.empid}"
+																	class="pull-right badge bg-blue">31</span>
+															</a></li>
+															<li><a href="#">EMAIL <span th:text="${faculty.email}"
+																	class="pull-right badge bg-aqua">5</span>
+															</a></li>
+															<li><a href="#">EMPLOYMENT STATUS <span th:text="${faculty.empstatus}"
+																	class="pull-right badge bg-green">12</span>
+															</a></li>
+														</ul>
+													</div>
+												</div>
+												<!-- /.widget-user -->
+											</div>
+										</td>
+									</tr>
+							</tbody>
+							<tfoot>
+			             		<tr>
+			             			<th>
+			             			</th>
+			             		</tr>
+			             	</tfoot>
+						</table>
+					</div>
+				</div>
+		</section>
+		<!-- /.content -->
+	</div>
+	<th:block layout:fragment="local-scripts">
+		<!-- DataTables -->
+		<!-- <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script> -->
+			
+		<!-- Jquery DataTable Plugin Js -->
+	    <script src="/facs/plugins/jquery-datatable/jquery.dataTables.js"></script>
+	    <script src="/facs/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+	    <script src="/facs/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+	    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+	    <script src="/facs/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+	    <script src="/facs/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+	    <script src="/facs/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+	    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+	    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+	    
+		<script
+			src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<!-- SlimScroll -->
+		<script
+			src="/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+		<!-- FastClick -->
+		<script src="/bower_components/fastclick/lib/fastclick.js"></script>
+		<script>
+	      $(function () {
+	        $('#facultyTable').DataTable({
+	        	"lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
+	            'paging'      : false,
+	            'lengthChange': false,
+	            'searching'   : true,
+	            'ordering'    : false,
+	            'info'        : true,
+	            'autoWidth'   : true,
+	            'stateSave'	  : true,
+	            "fnDrawCallback": function( oSettings ) {
+	            	/* $('.box').boxWidget('remove') */
+	            	$('.box').boxWidget({
+					  animationSpeed: 500,
+					  collapseTrigger: '#trigger',
+					  expandTrigger: '#trigger',
+					  collapseIcon: 'fa-minus',
+					  expandIcon: 'fa-plus',
+					})
+	            }   
+	      	})
+	      	
+	      	$('#modal-remove').on('show.bs.modal', function (event) {
+	    	  var button = $(event.relatedTarget)
+	    	  var facultyName = button.data('object-name')
+	    	  var facultyId = button.data('object-id')
+				
+	    	  var modal = $(this)
+	    	  modal.find('.modal-body p').html('Delete <strong>' + facultyName + '</strong> as Faculty?')
+	    	  modal.find('#confirmDelete').attr('href', "profile/" + facultyId + "/remove")
+	    	})
+	  	});
+	      
+	</script>
+	
+	</th:block>
+</body>
+<!-- /.content-wrapper -->
+</html>

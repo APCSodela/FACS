@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default_layout}">
+	<head>
+	<meta charset="UTF-8">
+	<title>Faculties | Profile</title>
+	
+		<th:block layout:fragment="local-styles">
+			<!-- Select2 -->
+			<link rel="stylesheet" href="/bower_components/select2/dist/css/select2.min.css">
+			<!-- JQuery DataTable Css -->
+			<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+			<!-- Custom JQueryDT Style -->
+			<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css" />
+			<!-- INFO BOX CSS -->
+			<link rel="stylesheet" href="/facs/css/InfoBox.css" />
+			<!-- Sweetalert Css -->
+		    <link href="/facs/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+		    
+			<style>
+				.info-box {
+					box-shadow: 0 0px 0px;
+					height: 50px;
+					min-height: 80px;
+					display: flex;
+					background-color: #fff;
+					position: relative;
+					overflow: hidden;
+					margin-bottom: 10px;
+					padding-top: 0px;
+					font: 16pt !important;
+					border-radius: 5px;
+				}
+			</style>
+		</th:block>
+	</head>
+	<body>
+		<div class="content-wrapper" layout:fragment="content">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Faculty Profile</h1>
+				<ol class="breadcrumb">
+					<li><i class="fa fa-dashboard"></i> Faculties</li>
+					<li>View Faculties</li>
+					<li class="active">Faculty Profile</li>
+				</ol>
+			</section>
+	
+			<!-- Main content -->
+			<section class="content container-fluid">
+				<div class="row">
+					<div class="col-md-3">
+						<!-- Profile Image -->
+						<div class="box box-primary">
+							<div class="box-body box-profile">
+								<img class="profile-user-img img-responsive img-circle" th:src="@{${profiledata.getImagedata()!=null} ? ${profiledata.getIconImage()} : '/dist/img/default-50x50.gif'}" alt="User profile picture">
+								<h3 th:text="${profiledata.firstname + ' ' + profiledata.lastname}" class="profile-username text-center">FACULTY NAME</h3>
+								<p th:text="${profiledata.title}" class="text-muted text-center">FACULTY TITLE</p>
+								<ul class="list-group list-group-unbordered">
+									<li class="list-group-item"><b>Regular Load</b> <a class="pull-right" th:text="${totalFull}">FULLOADVAL</a></li>
+									<li class="list-group-item"><b>Part Time Load</b> <a class="pull-right" th:text="${totalPart}">PARLOADVAL</a></li>
+								</ul>
+								<a onclick="activeTab()" href="#configure" type="button" data-toggle="tab" class="btn btn-primary btn-block"><b>Configure</b></a>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+						<!-- ABOUT ME-->
+						<div class="box box-primary">
+							<div class="box-header with-border">
+								<h3 class="box-title">More Detail</h3>
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body">
+								<strong><i class="fa fa-user margin-r-5"></i> EMPLOYEE NUMBER</strong>
+								<p th:text="${profiledata.empid}" class="text-muted">EMP_NUMBER</p>
+	
+								<hr>
+	
+								<strong><i class="fa fa-university margin-r-5"></i> DEPARTMENT</strong>
+	
+								<p th:text="${profiledata.department}" class="text-muted">FACULTY_DEPARTMENT</p>
+	
+								<hr>
+	
+								<strong><i class="fa fa-at margin-r-5"></i> EMAIL</strong>
+	
+								<p th:text="${profiledata.email}" class="text-muted">FACULTY_EMAIL</p>
+	
+								<hr>
+	
+								<strong><i class="fa fa-gear margin-r-5"></i> STATUS</strong>
+	
+								<p>
+									<span th:text="${profiledata.empstatus}" class="label label-success">FACULTY_STATUS</span>
+								</p>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+					</div>
+					<!-- /.col -->
+					<div class="col-md-9">
+						<div class="nav-tabs-custom">
+							<ul class="nav nav-tabs">
+								<li id="teachingAss" class="active"><a href="#schedule" data-toggle="tab">Teaching Assignment</a></li>
+								<li id = "configuration"><a href="#configure" data-toggle="tab">Configuration</a></li>
+							</ul>
+							<!-- .SCHEDULE -->
+							<div class="tab-content">
+								<div class="active tab-pane" id="schedule">
+									<div class="row" style="border-bottom: 1px solid #f4f4f4; padding-bottom: 5px">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+											<div class="info-box bg-orange hover-zoom-effect hover-expand-effect">
+												<div class="icon">
+													<i class="fa fa-user"></i>
+												</div>
+												<div class="content">
+													<div class="text">TOTAL LOAD</div>
+													<div class="number count-to" data-from="0" th:data-to="${totalLoad}" data-speed="1000" data-fresh-interval="20">TOTAL_LOAD</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+											<a th:href="@{${profiledata.id}+'/schedule/add'}">
+												<div class="info-box bg-blue hover-zoom-effect hover-expand-effect" style="cursor: pointer">
+													<div class="icon">
+														<i class="fa fa-book"></i>
+													</div>
+													<div class="content">
+														<div class="text">ADD LOAD</div>
+														<div class="number">CLICK HERE</div>
+													</div>
+												</div>
+											</a>
+										</div>
+									</div>
+									<!-- Schedule... -->
+									<div class="box box-primary" style="margin-top:20px">
+										<div class="box-header with-border">
+											<div class="box-title">
+												<h4>TEACHING ASSIGNMENT SUMMARY</h4>
+											</div>
+										</div>
+										<div class="box-body table-responsive">
+											<table id="scheduleTable" class="table table-bordered table-striped table-hover dataTable">
+												<thead>
+													<tr>
+														<th>Subject Code</th>
+														<th>Class</th>
+														<th>Time</th>
+														<th>Day</th>
+														<th>Room</th>
+														<th>Type</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<th:block th:each="load : ${loads}">
+														<tr th:each="detail : ${load.getLoadDetail()}">
+															<td th:text="${load.getSubjectCode()}"></td>
+															<td th:text="${load.getClassCourse()} + ' ' + ${load.getClassYear()} + '-' + ${load.getClassSection()}"></td>
+															<td th:text="${detail.getTimeStart()} + '-' + ${detail.getTimeEnd()}"></td>
+															<td th:text="${detail.getDay()}"></td>
+															<td th:text="${detail.getRoomNumber()}"></td>
+															<td th:text="${load.getLoadType()}"></td>
+															<td align="center">
+																<div class="btn-group">
+																	<a th:href="@{'/faculty/profile/'+${load.getFaculty().getId()}+'/schedule/edit/' + ${load.getId()}}" class="btn btn-sm btn-warning btn-flat">
+																		<i class="fa fa-edit"></i>
+																	</a>
+																	<a data-toggle="modal" th:attr="data-object-facultyID=${load.getFaculty().getId()}, data-object-detailID=${detail.getId()}, data-target='#modal-remove'" class="btn btn-sm btn-danger btn-flat">
+																		<i class="fa fa-trash"></i>
+																	</a>
+																	<div class="modal modal-danger fade" id="modal-remove">
+															        	<div class="modal-dialog modal-sm">
+															            	<div class="modal-content">
+															            		<div class="modal-header" style="text-align: center; color: white;">
+																			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+																			    	<span class="modal-title"><strong>C O N F I R M A T I O N</strong></span>
+																		      	</div>
+																              	<div class="modal-body">
+																					<p> 
+																						Delete the Load?
+																					</p>
+																				</div>
+																				<div class="modal-footer">
+																	                <button type="button" class="btn btn-sm btn-outline pull-left" data-dismiss="modal">Close</button>
+																	                <a type="button" id="confirmDelete">
+																	                	<button type="button" class="btn btn-sm btn-outline"><strong>CONFIRM</strong></button>
+																	                </a>
+																              	</div>
+															            	</div>
+															            	<!-- /.modal-content -->
+															          	</div>
+															          	<!-- /.modal-dialog -->
+														        	</div>
+															        <!-- /.modal -->
+											                    </div>
+										                    </td>
+														</tr>
+													</th:block>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="configure">
+									<div class="box box-primary">
+										<div class="box-body">
+											<form th:action="@{/faculty/update}" th:object="${profiledata}" method="POST" enctype="multipart/form-data">
+												<input th:field="*{id}" type="hidden">
+											
+												<small><b>PROFILE PICTURE</b></small><br>
+												<div class="form-group">
+													<input type="file" name="imagefile">
+													<p class="help-block">Select Faculty Profile Picture.</p>
+												</div>
+												
+												<small><b>EMPLOYEE ID</b></small>
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-id-badge"></i></span>
+								                	<input th:field="*{empid}" type="text" class="form-control" placeholder="Employee ID..."> 	
+												</div>
+												<br/>
+												<small><b>TITLE</b></small>
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-user"></i></span> 
+													<select th:field="*{title}" class="form-control" required>
+														<option value="" selected>Select Title</option>
+														<option value="Mr.">Mr.</option>
+														<option value="Ms.">Ms.</option>
+														<option value="Engr.">Engr.</option>
+														<option value="Dr.">Dr.</option>
+													</select>
+												</div>
+												<br/>
+												<small><b>FIRST NAME</b></small>
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								                	<input th:field="*{firstname}" type="text" class="form-control" placeholder="First Name...">	
+												</div>
+												<br/>
+												<small><b>LAST NAME</b></small>
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								                	<input th:field="*{lastname}" type="text" class="form-control" placeholder="Last Name...">	
+												</div>
+												<br/>
+												<small><b>DEPARTMENT</b></small>
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-university"></i></span> 
+													<select th:field="*{department}" class="form-control" required>
+														<option value="" selected>Select Department</option>
+														<option value="BSCPE">BS Computer Engineering</option>
+														<option value="BSCE">BS Civil Engineering</option>
+														<option value="BSECE">BS Electronics Engineering</option>
+														<option value="BSEE">BS Electrical Engineering</option>
+														<option value="BSIE">BS Industrial Engineering</option>
+														<option value="BSME">BS Mechanical Engineering</option>
+														<option value="BSREM">BS Railway Engineering</option>
+														<option value="BSARCH">BS Architecture</option>
+														<option value="BSID">BS Interior Design</option>
+													</select>
+												</div>
+												<br/>
+												<small><b>EMPLOYMENT STATUS</b></small>
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-gears"></i></span> 
+													<select th:field="*{empstatus}" class="form-control" required>
+														<option value="" selected>Select Employment Status</option>
+														<option value="Regular">Regular</option>
+														<option value="Part Time">Part Time</option>
+														<option value="Admin">Administrator</option>
+													</select>
+												</div>
+												<br/>
+												<small><b>EMAIL ADDRESS</b></small>
+								                <div class="input-group">
+									                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+									                <input th:field="*{email}" type="email" class="form-control" placeholder="Email address...">
+								                </div>
+								                <br/>
+								                <div class="input-group">
+								                	<button type="submit" class="btn btn-block btn-primary ml-auto">Save Updates</button>
+								                </div>
+							                </form>
+										</div>
+										<!-- /.box-body -->
+									</div>
+									<!-- /.box -->
+								</div>
+								<!-- /.tab-pane -->
+							</div>
+							<!-- /.tab-content -->
+						</div>
+						<!-- /.nav-tabs-custom -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<th:block layout:fragment="local-scripts">
+			<!-- DataTables -->
+			<!-- <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script> -->
+	
+			<!-- JQuery Countto -->
+			<script src="/facs/plugins/jquery-countto/jquery.countTo.js"></script>
+			<!-- Jquery DataTable Plugin Js -->
+			<script src="/facs/plugins/jquery-datatable/jquery.dataTables.js"></script>
+			<script src="/facs/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+		    <!-- SweetAlert Plugin Js -->
+	    	<script src="/facs/plugins/sweetalert/sweetalert.min.js"></script>
+			<script>
+				$(function () {
+					initCounters();
+					 //Exportable table
+				    $('#scheduleTable').DataTable({
+				        responsive: true,
+				        'paging'      : true,
+			            'lengthChange': false,
+			            'searching'   : true,
+			            'ordering'    : false,
+			            'info'        : true,
+			            'autoWidth'   : true,
+			            'pageLength'  : 5,
+			            'scrollY'     : 283 
+				        
+				    });
+				}); 
+				//Widgets count plugin
+				function initCounters() {
+				    $('.count-to').countTo();
+				};
+				// Active Tabs
+				function activeTab() {
+					$('#teachingAss').removeClass('active');
+				    $('#configuration').addClass('active');
+				};
+				
+				$('#modal-remove').on('show.bs.modal', function (event) {
+					var button = $(event.relatedTarget);
+					var facultyID = button.data('object-facultyID');
+					var detailID = button.data('object-detailID');
+					
+					var modal = $(this)
+					modal.find('#confirmDelete').attr('href', "/faculty/profile/" + facultyID + "/schedule/remove/" + detailID);
+				});
+				
+			</script>
+		</th:block>
+	</body>
+
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{layouts/default_layout}">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Daily | Checklist</title>
+	
+	    <th:block layout:fragment="local-styles">
+			<!-- Bootstrap Time Picker -->
+			<link rel="stylesheet" href="/plugins/timepicker/bootstrap-timepicker.min.css">
+			<!-- JQuery DataTable Css -->
+			<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+			<!-- Custom JQueryDT Style -->
+			<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
+			
+			<style>
+				td {
+					vertical-align: middle !important;
+					text-align: center;
+				}
+				td img {
+					display: block;
+				    margin-left: auto;
+				    margin-right: auto;
+				}
+	            th {
+					text-align: center;
+					color: white;
+					background-color: #202020;
+					padding-right: 0px !important;
+					padding-left: 0px !important;
+				}
+				tr {
+					text-align: center;
+				}
+			</style>
+	    </th:block>
+	</head>
+	<body>
+        <div class="content-wrapper" layout:fragment="content">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 th:text="${day} + ' Checklist'">
+        			Today's Checklist
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i>Daily</a></li>
+                    <li class="active">Checklists</li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+			<section class="content container-fluid">
+				<!--------------------------
+                 | Your Page Content Here |
+                 -------------------------->
+				<div class="box box-primary">
+					<!--
+					<div class="box-header with-border">
+						<h3 class="box-title"><i>Routine Number: </i><strong style="color: green;">N/A</strong></h3>
+					</div>
+					-->
+					<!-- /.box-header -->
+					<div class="box-body table-responsive">
+						<table id="checklistTable" class="table table-bordered table-hover table-striped table-condensed flex">
+							<thead>
+								<tr>
+									<th>Room</th>
+									<th>Time</th>
+									<th>Image</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="checklist: ${checklist}" th:classappend="${(checklist.checkstatus=='PRESENT' ? 'success' : '') + 
+																						(checklist.checkstatus=='ABSENT'  ? 'danger' : '') +
+																						(checklist.checkstatus=='LATE' ? 'warning' : '')}">
+									
+									<td th:text="${checklist.room}">Room</td>
+									<td th:text="${checklist.timestart} + ' to ' + ${checklist.timeend}">Time</td>
+									<td>
+										<a class="btn" data-toggle="modal" 
+											th:attr="data-object-imageSRC=@{${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() !=null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getIconImage()} : '/dist/img/default-50x50.gif'},
+													 data-object-facultyName=${checklist.facultyname}, 
+													 data-object-department=${checklist.department},
+													 data-object-subjectName=${checklist.subjectname},
+													 data-object-room=${checklist.room},
+													 data-object-time=${checklist.timestart} + '-' + ${checklist.timeend},
+													 data-target='#modal-info'">
+											<img class="img-circle img-responsive"
+												th:src="@{${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() !=null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getIconImage()} : '/dist/img/default-50x50.gif'}"
+												alt="Faculty Profile Picture" width="100px" height="100px">
+										</a>
+										<div class="modal fade" id="modal-info">
+								        	<div class="modal-dialog modal-sm">
+								            	<div class="modal-content">
+								            		<div class="modal-header" style="background-color: #367FA9;">
+												        <button type="button" class="close" data-dismiss="modal">&times;</button>
+												    	<span class="modal-title" style="color: white;"><strong>I N F O R M A T I O N</strong></span>
+											      	</div>
+									              	<div class="modal-body">
+														<div class="box-body box-primary">
+															<img class="profile-user-img img-responsive img-circle" alt="User profile picture" id="image">
+															<h3 class="profile-username text-center" id="facultyName">Faculty Name</h3>
+															<p class="text-muted text-center" id="facultyName">Department</p>
+															<div class="list-group list-group-unbordered">
+																<div class="list-group-item list-group-item-info">
+																	<span id="subjectName">Subject Name</span>
+																</div>
+																<small class="text-info"><strong><i>Subject</i></strong></small>
+																<div class="list-group-item list-group-item-info">
+																	<span id="room">Room</span>
+																</div>
+																<small class="text-info"><strong><i>Room</i></strong></small>
+																<div class="list-group-item list-group-item-info">
+																	<span id="time">Time</span>
+																</div>
+																<small class="text-info"><strong><i>Time</i></strong></small>
+															</div>
+														</div>
+													</div>
+								            	</div>
+								            	<!-- /.modal-content -->
+								          	</div>
+								          	<!-- /.modal-dialog -->
+							        	</div>
+								        <!-- /.modal -->
+									</td>
+									<td>
+										<div class="btn-group-vertical">
+											<!-- PRESENT BUTTON -->
+					                      	<a th:href="@{'/daily/checklist/' + ${checklist.id} + '/present'}" class="btn btn-sm btn-flat btn-success" id="presentBtn">
+												<i class="fa fa-check"></i> <strong>PRESENT</strong>
+					                      	</a>
+					                      	<!-- /PRESENT  -->
+					                      	<!-- LATE BUTTON -->
+					                      	<a  data-toggle="modal" th:attr="data-object-id=${checklist.id}, data-target='#modal-late'" class="btn btn-sm btn-flat btn-warning">
+												<i class="fa fa-clock-o"></i> <strong>LATE</strong>
+					                      	</a>
+					                      	<!-- /LATE -->
+				                      	 	<div class="modal modal-warning fade" id="modal-late">
+									        	<div class="modal-dialog modal-sm">
+									            	<div class="modal-content">
+										              	<div class="modal-body">
+															<div class="box-body">
+																<div class="text-center">
+																	<form th:object="${ticketdata}" id="timeofArrivalForm" method="POST">
+																		<!-- Time Picker -->
+																		<div class="col-lg-12 col-sm-6 bootstrap-timepicker">
+																			<div class="form-group">
+																				<label>Time of Arrival:</label>
+																				<div class="input-group">
+																					<div class="input-group-addon">
+																						<i class="fa fa-clock-o timepicker"></i>
+																					</div>
+																					<input th:field="*{timearrival}" type="text" class="form-control timepicker" required>
+																				</div>
+																				<!-- /.input group -->
+																			</div>
+																			<!-- /.form group -->
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+										              	<div class="modal-footer">
+											                <button type="button" class="btn btn-sm btn-outline pull-left" data-dismiss="modal">Close</button>
+											                <a type="button" id="confirmLate">
+											                	<button type="button" class="btn btn-sm btn-outline"><strong>CONFIRM</strong></button>
+											                </a>
+										              	</div>
+									            	</div>
+									            	<!-- /.modal-content -->
+									          	</div>
+									          	<!-- /.modal-dialog -->
+								        	</div>
+									        <!-- /.modal -->
+									        <!-- ABSENT BUTTON -->
+					                      	<a th:href="@{'/daily/checklist/' + ${checklist.id} + '/absent'}" class="btn btn-sm btn-flat btn-danger" id="absentBtn">
+												<i class="fa fa-times"></i> <strong>ABSENT</strong>
+					                      	</a>
+					                      	<!-- /ABSENT -->
+					                    </div>
+				                    </td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- /.box-body -->
+					<br>
+					<a data-toggle="modal" th:attr="data-object-id=${day}, data-target='#modal-remarks'">
+						<button type="button" class="btn btn-block btn-primary">
+							<strong><i class="fa fa-save"></i> SAVE REMARKS</strong>
+						</button>
+                   	</a>
+                   	<div class="modal modal-primary fade" id="modal-remarks">
+			        	<div class="modal-dialog modal-sm">
+			            	<div class="modal-content">
+			            		<div class="modal-header" style="text-align: center; color: white;">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							    	<span class="modal-title"><strong>C O N F I R M A T I O N</strong></span>
+						      	</div>
+				              	<div class="modal-body">
+									<p> 
+										Save All Remarks for Today?
+									</p>
+								</div>
+								<div class="modal-footer">
+					                <button type="button" class="btn btn-sm btn-outline pull-left" data-dismiss="modal">CLOSE</button>
+					                <a type="button" id="confirmRemarks">
+					                	<button type="button" class="btn btn-sm btn-outline"><strong>CONFIRM</strong></button>
+					                </a>
+				              	</div>
+			            	</div>
+			            	<!-- /.modal-content -->
+			          	</div>
+			          	<!-- /.modal-dialog -->
+		        	</div>
+			        <!-- /.modal -->
+				</div>
+				<!-- /.box -->
+			</section>
+		</div>
+		<!-- /.content-wrapper -->
+		<th:block layout:fragment="local-scripts">
+			<!-- Bootstrap Time Picker -->
+			<script src="/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+	
+		    <!-- JQuery DataTable Plug-in JS -->
+		    <script src="/facs/plugins/jquery-datatable/jquery.dataTables.js"></script>
+		    <script src="/facs/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+		    <script src="/facs/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+		    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+		    <script src="/facs/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+		    <script src="/facs/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+		    <script src="/facs/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+		    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+		    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+	        
+	   	 	<script>
+	  			$(function (){
+					$('.timepicker').timepicker({
+						showInputs : false
+					});
+		  		
+					$('#checklistTable').DataTable({
+						'paging'      : false,
+						'lengthChange': false,
+						'searching'   : true,
+						'ordering'    : false,
+						'info'        : false,
+						'autoWidth'   : false,
+					});
+		 			
+					$('#modal-info').on('show.bs.modal', function (event) {
+						var button = $(event.relatedTarget);
+						var imageSRC = button.data('object-imageSRC');
+						var facultyName = button.data('object-facultyName');
+						var department = button.data('object-department');
+						var subjectName = button.data('object-subjectName');
+						var room = button.data('object-room');
+						var time = button.data('object-time');
+						
+						var modal = $(this)
+						modal.find('#image').attr('src', imageSRC);
+						modal.find('#facultyName').text(facultyName);
+						modal.find('#department').text(department);
+						modal.find('#subjectName').text(subjectName);
+						modal.find('#room').text(room);
+						modal.find('#time').text(time);
+					});
+					
+					$('#modal-late').on('show.bs.modal', function(event){
+						var button = $(event.relatedTarget);
+						var id = button.data('object-id');
+		
+						var modal = $(this);
+						modal.find('#timeofArrivalForm').attr('action', "/daily/checklist/" + id + "/late");
+						modal.find('#confirmLate').click(function(){
+							$("#timeofArrivalForm").submit()
+						});
+					});
+		
+					$('#modal-remarks').on('show.bs.modal', function(event){
+						var button = $(event.relatedTarget);
+						var day = button.data('object-id');
+						
+						var modal = $(this);
+						modal.find('#confirmRemarks').attr('href', "/daily/checklist/" + day + "/saveRemarks");
+					});
+					 
+					$('#presentBtn').click(function(){
+						$('#tableRow').addClass("success");
+					})
+				});
+			</script>
+		</th:block>
+	</body>
+</html>

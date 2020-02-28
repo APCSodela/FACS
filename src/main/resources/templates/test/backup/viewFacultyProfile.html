@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}">
+<head>
+<meta charset="UTF-8">
+<title>Manage Faculty</title>
+
+<th:block layout:fragment="local-styles">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="/bower_components/select2/dist/css/select2.min.css">
+</th:block>
+</head>
+<body>
+	<!-- EDIT THIS FOR THE 
+                                         LAYOUT FRAGMENT NAME
+                                          YOU WANT TO APPEND THIS -->
+	<div class="content-wrapper" layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				Faculty Profile <small>Page Description</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i>Faculties</a></li>
+				<li class="active">View Faculty</li>
+				<li class="active">View Faculty Profile</li>
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content container-fluid">
+			<!--------------------------
+                  | Your Page Content Here |
+                  -------------------------->
+			<div th:each="profile: ${profiledata}"
+				class="box box-widget widget-user">
+				<!-- Add the bg color to the header using any of the bg-* classes -->
+				<div class="widget-user-header bg-yellow-active">
+					<h3 th:text="${profile.fullname}" class="widget-user-username">Full name</h3>
+					<h5 th:text="${profile.email}" class="widget-user-desc">Email Address</h5>
+				</div>
+				<div class="widget-user-image">
+					<img class="img-circle" th:src="@{${profile.getIconImage()}}" alt="User Avatar">
+				</div>
+				<div class="box-footer">
+					<div class="row">
+						<div class="col-sm-4 border-right">
+							<div class="description-block">
+								<h5 th:text="${profile.empstatus}" class="description-header"></h5>
+								<span class="description-text">EMPLOYMENT STATUS</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-4 border-right">
+							<div class="description-block">
+								<h5 th:text="${profile.department}" class="description-header"></h5>
+								<span class="description-text">DEPARTMENT</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-4">
+							<div class="description-block">
+								<h5 th:text="${profile.empid}" class="description-header"></h5>
+								<span class="description-text">EMPLOYEE ID</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+								
+					</div>
+					<!-- /.row -->
+				<div>
+					<!-- <a th:href="@{'/faculty/configure/' + ${profiledata.id}}" > -->
+					
+				</div>
+				
+				</div>
+				<a data-toggle="modal" data-target="#addFacModal">
+						<button type="button" class="btn btn-block btn-warning btn-sm">Configure Faculty</button>
+				</a>
+			</div>
+
+			<h2 class="page-header">Faculty Schedule</h2>
+			<div class="box box-warning">
+				<div class="box-body">
+					<table class="table table-condensed">
+						<thead>
+							<tr>
+								<th>Subject Code</th>
+								<th>Subject Name</th>
+								<th>Room</th>
+								<th>Day</th>
+								<th>Time</th>
+								<th>Class</th>
+								<th>Actions</th>
+							</tr>
+						</thead>	
+						 <tr th:if="${profilesched.empty}">
+				            <td colspan="7"> Nothing to show here..</td>
+				         </tr>
+							<tr th:each="schedule: ${profilesched}" style="column-span= all">
+								<td th:text="${schedule.subjectcode}">
+									Subject Code
+								</td>
+								<td th:text="${schedule.subjectname}">
+									Subject Name
+								</td>
+								<td >
+									<small th:text="${schedule.room}" class="label bg-red">
+										Room
+									</small>
+								</td>
+								<td>
+									<small th:text="${schedule.day}" class="label bg-orange">
+										Day
+									</small>
+								</td>
+								<td th:text="${schedule.timestart} + '-' + ${schedule.timeend}">
+									Time
+								</td>
+								<td>
+									<small th:text="${schedule.course} + ' ' + ${schedule.year} + '-' + ${schedule.section}" class="label bg-green">
+										Class
+									</small>
+								</td>
+								<td>
+								<div class="btn-group ">
+				                  <button type="button" class="btn btn-info btn-xs ">Action</button>
+				                  <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				                    <span class="caret"></span>
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <ul class="dropdown-menu" role="menu">
+				                  	<li><a th:href="@{${schedule.facid}+'/schedule/edit/'+${schedule.id}}">Edit</a></li>
+				                    <li><a th:href="@{${schedule.facid}+'/schedule/remove/'+${schedule.id}}">Remove</a></li>
+				                  </ul>
+				                </div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div>
+					</div>
+				</div>
+				<!-- /.box-body -->
+				<!-- <a data-toggle="modal" data-target="#addSchedModal"> -->
+				<a th:href="@{'/faculty/profile/' + ${profiledata.id} + '/schedule/add/'}">
+						<button type="button" class="btn btn-block btn-warning btn-sm">Add Schedule</button>
+				</a>
+			</div>
+			<h2 class="page-header">Faculty Analytics</h2>
+			<div class="box box-warning">
+				<div class="box-header with-border">
+					<h3 class="box-title">Time Statistics</h3>
+
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool"
+							data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body">
+					<div class="chart">
+						<canvas id="areaChart" style="height: 239px; width: 485px;"
+							width="485" height="239"></canvas>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			</div>
+
+		</section>
+		<!-- /.content -->
+		<div class="modal fade" id="addFacModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Configure Faculty</h4>
+              </div>
+              <div class="modal-body">
+                <div class="box-body">
+					<form th:object="${profiledata}" id="addFacForm" th:action="@{'/faculty/profile/' + ${profiledata.id} + '/update'}" method="POST">
+						<input th:field="*{id}" type="hidden">	
+						<small><b>EMPLOYEE ID</b></small>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-id-badge"></i></span>
+			                	<input th:field="*{empid}" type="text" class="form-control" placeholder="Employee ID..."> 	
+							</div>
+							<br/>
+							<small><b>TITLE</b></small>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+			                	<input th:field="*{title}" type="text" class="form-control" placeholder="Title...">	
+							</div>
+							<br/>
+							<small><b>FIRST NAME</b></small>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+			                	<input th:field="*{firstname}" type="text" class="form-control" placeholder="First Name...">	
+							</div>
+							<br/>
+							<small><b>LAST NAME</b></small>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+			                	<input th:field="*{lastname}" type="text" class="form-control" placeholder="Last Name...">	
+							</div>
+							<br/>
+							<small><b>DEPARTMENT</b></small>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-university"></i></span>
+			                	<input th:field="*{department}" type="text" class="form-control" placeholder="Department...">	
+							</div>
+							<br/>
+							<small><b>EMPLOYMENT STATUS</b></small>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-gears"></i></span>
+			                	<input th:field="*{empstatus}" type="text" class="form-control" placeholder="Employment Status...">	
+							</div>
+							<br/>
+							<small><b>EMAIL ADDRESS</b></small>
+			                <div class="input-group">
+				                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+				                <input th:field="*{email}" type="email" class="form-control" placeholder="Email address...">
+			                </div>
+			                <br/>
+		                </form>
+					</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button id="saveFacBtn" type="button" class="btn btn-primary">Save Changes</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+	</div>
+	<th:block layout:fragment="local-scripts">
+		<!-- ChartJS -->
+		<script src="../../../bower_components/chart.js/Chart.js"></script>
+		<!-- FastClick -->
+		<script src="../../../bower_components/fastclick/lib/fastclick.js"></script>
+		<!-- AdminLTE App -->
+		<script src="../../../dist/js/adminlte.min.js"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script src="../../../dist/js/demo.js"></script>
+		<!-- page script -->
+		<script>
+			$(function() {
+				/* ChartJS
+				 * -------
+				 * Here we will create a few charts using ChartJS
+				 */
+
+				//--------------
+				//- AREA CHART -
+				//--------------
+				// Get context with jQuery - using jQuery's .get() method.
+				var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+				// This will get the first returned node in the jQuery collection.
+				var areaChart = new Chart(areaChartCanvas)
+
+				var areaChartData = {
+					labels : [ 'January', 'February', 'March', 'April', 'May',
+							'June', 'July' ],
+					datasets : [ {
+						label : 'Electronics',
+						fillColor : 'rgba(210, 214, 222, 1)',
+						strokeColor : 'rgba(210, 214, 222, 1)',
+						pointColor : 'rgba(210, 214, 222, 1)',
+						pointStrokeColor : '#c1c7d1',
+						pointHighlightFill : '#fff',
+						pointHighlightStroke : 'rgba(220,220,220,1)',
+						data : [ 65, 59, 80, 81, 56, 55, 40 ]
+					}, {
+						label : 'Digital Goods',
+						fillColor : 'rgba(60,141,188,0.9)',
+						strokeColor : 'rgba(60,141,188,0.8)',
+						pointColor : '#3b8bba',
+						pointStrokeColor : 'rgba(60,141,188,1)',
+						pointHighlightFill : '#fff',
+						pointHighlightStroke : 'rgba(60,141,188,1)',
+						data : [ 28, 48, 40, 19, 86, 27, 90 ]
+					} ]
+				}
+
+				var areaChartOptions = {
+					//Boolean - If we should show the scale at all
+					showScale : true,
+					//Boolean - Whether grid lines are shown across the chart
+					scaleShowGridLines : false,
+					//String - Colour of the grid lines
+					scaleGridLineColor : 'rgba(0,0,0,.05)',
+					//Number - Width of the grid lines
+					scaleGridLineWidth : 1,
+					//Boolean - Whether to show horizontal lines (except X axis)
+					scaleShowHorizontalLines : true,
+					//Boolean - Whether to show vertical lines (except Y axis)
+					scaleShowVerticalLines : true,
+					//Boolean - Whether the line is curved between points
+					bezierCurve : true,
+					//Number - Tension of the bezier curve between points
+					bezierCurveTension : 0.3,
+					//Boolean - Whether to show a dot for each point
+					pointDot : false,
+					//Number - Radius of each point dot in pixels
+					pointDotRadius : 4,
+					//Number - Pixel width of point dot stroke
+					pointDotStrokeWidth : 1,
+					//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+					pointHitDetectionRadius : 20,
+					//Boolean - Whether to show a stroke for datasets
+					datasetStroke : true,
+					//Number - Pixel width of dataset stroke
+					datasetStrokeWidth : 2,
+					//Boolean - Whether to fill the dataset with a color
+					datasetFill : true,
+					//String - A legend template
+					legendTemplate : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+					//Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+					maintainAspectRatio : false,
+					//Boolean - whether to make the chart responsive to window resizing
+					responsive : true
+				}
+
+				//Create the line chart
+				areaChart.Line(areaChartData, areaChartOptions)
+
+
+				
+			})
+		</script>
+		<!-- Select2 -->
+		<script src="/bower_components/select2/dist/js/select2.full.min.js"></script>
+		<!-- InputMask -->
+		<script src="/plugins/input-mask/jquery.inputmask.js"></script>
+		<script src="/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+		<script src="/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+		<!-- SlimScroll -->
+		<script src="/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+		<!-- iCheck 1.0.1 -->
+		<script src="/plugins/iCheck/icheck.min.js"></script>
+		<!-- FastClick -->
+		<script src="/bower_components/fastclick/lib/fastclick.js"></script>
+		<script>
+	    $(document).ready(function() {
+	    	
+	    	 $('.select2').select2()
+	    	 
+	        $("#saveFacBtn").click(function() {
+	            $("#addFacForm").submit();
+	        })
+	        
+	       
+	     });
+		</script>
+	</th:block>
+</body>
+<!-- /.content-wrapper -->
+
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{layouts/default_layout}">
+	<head>
+		<meta charset="UTF-8">
+		<title>Tickets | View</title>
+		
+		<th:block layout:fragment="local-styles">
+			<!-- JQuery DataTable Css -->
+			<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+			<!-- Custom JQueryDT Style -->
+			<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
+			
+			<style>
+				td {
+					vertical-align: middle !important;
+					margin-left: auto;
+				    margin-right: auto;
+				}
+				th {
+					text-align: center;
+					color: white;
+					background-color: #202020;
+					padding-right: 0px !important;
+					padding-left: 0px !important;
+				}
+				tr {
+					text-align: center;
+				}
+			</style>
+		    
+		</th:block>
+	</head>
+	<body>
+		<div class="content-wrapper" layout:fragment="content">
+        
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                   Ticket
+                </h1>
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-dashboard"></i> Tickets</li>
+                    <li class="active">View Tickets</li>
+                </ol>
+            </section>
+
+            <!-- Main Content -->
+            <section class="content container-fluid">
+                <!--------------------------
+                  | Your Page Content Here |
+                  -------------------------->
+          		<div class="box box-primary">
+	               	<div class="box-body">
+						<table id="ticketTable" class="table table-bordered table-hover table-striped flex">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Faculty Name</th>
+									<th>Date</th>
+									<th>Remark</th>
+									<th>Time of Absence (in hours)</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="ticket: ${ticketList}">
+									<td th:text="*{ticket.id}">Ticket ID</td>
+									<td th:text="*{ticket.facultyname}" style="text-align: left;">Faculty Name</td>
+									<td th:text="*{ticket.date}">Date</td>
+									<td th:text="*{ticket.remark}">Remark</td>
+									<td th:text="*{ticket.timediff}">Time of Absence (in hours)</td>
+									<td>
+										<div class="btn-group">
+											<a data-toggle="modal" data-target="#modal-info" class="btn btn-sm btn-info btn-flat">
+					                      		<i class="fa fa-info-circle"></i>
+					                      	</a>
+					                      	<div class="modal fade" id="modal-info">
+									        	<div class="modal-dialog modal-sm">
+									            	<div class="modal-content">
+									            		<div class="modal-header" style="background-color: #367FA9;">
+													        <button type="button" class="close" data-dismiss="modal">&times;</button>
+													    	<span class="modal-title" style="color: white;"><strong>I N F O R M A T I O N</strong></span>
+												      	</div>
+										              	<div class="modal-body">
+															<div class="box-body box-primary">
+																<h3 class="profile-username text-center" th:text="${ticket.facultyname}">Faculty Name</h3>
+																<p class="text-muted text-center" th:text="${ticket.email}">Department</p>
+																<div class="list-group list-group-unbordered">
+																	<div class="list-group-item list-group-item-info">
+																		<span th:text="${ticket.date} + ' - ' + ${ticket.day}">Date - Day</span>
+																	</div>
+																	<small class="text-info"><strong><i>Date - Day</i></strong></small>
+																	<div class="list-group-item list-group-item-info">
+																		<span th:text="${ticket.room}">Room</span>
+																	</div>
+																	<small class="text-info"><strong><i>Room</i></strong></small>
+																	<div class="list-group-item list-group-item-info">
+																		<span th:text="${ticket.timestart} + '-' + ${ticket.timeend}">Time</span>
+																	</div>
+																	<small class="text-info"><strong><i>Time</i></strong></small>
+																	<div class="list-group-item list-group-item-info">
+																		<span th:text="${ticket.remark}">Remark</span>
+																	</div>
+																	<small class="text-info"><strong><i>Remark</i></strong></small>
+																	<div class="list-group-item list-group-item-info">
+																		<span th:text="${ticket.timediff}">Time of Absence</span>
+																	</div>
+																	<small class="text-info"><strong><i>Time of Absence (in hours)</i></strong></small>
+																</div>
+															</div>
+														</div>
+									            	</div>
+									            	<!-- /.modal-content -->
+									          	</div>
+									          	<!-- /.modal-dialog -->
+								        	</div>
+									        <!-- /.modal -->
+											<a th:href="@{'/ticket/view/' + ${ticket.id} + '/waive'}" class="btn btn-sm btn-primary btn-flat">
+												<i class="fa fa-ticket"></i> Waive
+											</a>
+					                    </div>
+					                    
+				                    </td>
+								</tr>
+							</tbody>	
+						</table>
+					</div>
+					<!-- /.box-body -->
+					<br>
+					<a data-toggle="modal" th:attr="data-object-id=${day}, data-target='#modal-report'">
+						<button type="button" class="btn btn-block btn-primary">
+							<strong><i class="fa fa-file"></i> GENERATE REPORT</strong>
+						</button>
+                  	</a>
+                  	<div class="modal modal-primary fade" id="modal-report">
+			        	<div class="modal-dialog modal-sm">
+			            	<div class="modal-content">
+			            		<div class="modal-header" style="text-align: center; color: white;">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							    	<span class="modal-title"><strong>C O N F I R M A T I O N</strong></span>
+						      	</div>
+				              	<div class="modal-body">
+									<p> 
+										Generate the CSV File Report?
+									</p>
+								</div>
+								<div class="modal-footer">
+					                <button type="button" class="btn btn-sm btn-outline pull-left" data-dismiss="modal">CLOSE</button>
+					                <a type="button" id="confirmReport">
+					                	<button type="button" class="btn btn-sm btn-outline"><strong>CONFIRM</strong></button>
+					                </a>
+				              	</div>
+			            	</div>
+			            	<!-- /.modal-content -->
+			          	</div>
+			          	<!-- /.modal-dialog -->
+		        	</div>
+			        <!-- /.modal -->
+				</div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+		<th:block layout:fragment="local-scripts">
+		   
+			<!-- Jquery DataTable Plugin Js -->
+			<script src="/facs/plugins/jquery-datatable/jquery.dataTables.js"></script>
+			<script src="/facs/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+			<script src="/facs/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+    
+			<script>
+				$(function () {
+					$('#ticketTable').DataTable({
+		       			'paging'      : false,
+						'lengthChange': false,
+						'searching'   : true,
+						'ordering'    : false,
+						'info'        : true,
+						'autoWidth'   : false
+					});
+					
+					$('#modal-report').on('show.bs.modal', function(event){
+						var button = $(event.relatedTarget);
+						
+						var modal = $(this);
+						modal.find('#confirmReport').attr('href', "/ticket/report");
+					});
+				});
+			</script>
+		</th:block>
+	</body>
+</html>

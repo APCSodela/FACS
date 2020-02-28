@@ -1,0 +1,146 @@
+<div th:fragment="modals">
+<!-- ADD FACULTY MODAL -->
+	<div class="modal fade" id="addFacultyModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Default Modal</h4>
+				</div>
+				<div class="modal-body">
+					<div class="box-body">
+						<form th:action="@{/faculty/save}" id="addFacForm" method="POST">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-users"></i></span>
+								<input name="fullname" type="text" class="form-control"
+									placeholder="Full name...">
+							</div>
+							<br />
+							<div class="input-group">
+								<span class="input-group-addon"><i
+									class="fa fa-university"></i></span> <input name="department" type="text"
+									class="form-control" placeholder="Department...">
+							</div>
+							<br />
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-gears"></i></span>
+								<input  name="status" type="text" class="form-control" placeholder="Status...">
+							</div>
+							<br />
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+								<input name="email" type="email" class="form-control"
+									placeholder="Email address...">
+							</div>
+							<br />
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left"
+						data-dismiss="modal">Close</button>
+					<button id="saveFacBtn" type="button" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
+	
+	
+<!-- SCHEDULE MODAL -->
+        <div class="modal fade" id="addSchedModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Schedule</h4>
+              </div>
+              <div class="modal-body">
+                <div class="box-body">
+					<form th:object="${scheduledata}" id="addSchedForm" th:action="@{/faculty/schedule/save}" method="POST">
+						<input th:field="*{id}" type="hidden">	
+						
+						<label for="exampleInputEmail1">Subject Name</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-university"></i></span>
+		                	<input th:field="*{subjectname}" type="text" class="form-control" placeholder="Subject Name...">	
+						</div>
+						
+						<label for="exampleInputEmail1">Subject Code</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-university"></i></span>
+		                	<input th:field="*{subjectcode}"  type="text" class="form-control" placeholder="Subject Code...">	
+						</div>
+						
+						<label for="exampleInputEmail1">Building</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-building"></i></span>
+		                	<input th:field="*{building}" type="text" class="form-control" placeholder="Building...">	
+						</div>
+						
+	                	<label for="exampleInputEmail1">Room Number</label>
+		                <div class="input-group">
+			                <span class="input-group-addon"><i class="fa fa-building"></i></span>
+			                <input th:field="*{roomnumber}" type="text" class="form-control" placeholder="Room Number...">
+		                </div>
+
+	                	<label for="exampleInputEmail1">Course</label>
+		                <div class="input-group">
+			                <span class="input-group-addon"><i class="fa fa-university"></i></span>
+			                <input th:field="*{course}" type="text" class="form-control" placeholder="Course...">
+		                </div>
+		                
+	                	<label for="exampleInputEmail1">Course Code</label>
+		                <div class="input-group">
+			                <span class="input-group-addon"><i class="fa fa-university"></i></span>
+			                <input th:field="*{coursecode}" type="text" class="form-control" placeholder="Course Code...">
+		                </div>
+		                
+	                	<label for="exampleInputEmail1">Time Start</label>
+		                <div class="input-group">
+			                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+			                <input th:field="*{timestart}" type="text" class="form-control" placeholder="Time Start...">
+		                </div>
+		                
+	                	<label for="exampleInputEmail1">Time End</label>
+		                <div class="input-group">
+			                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+			                <input th:field="*{timeend}" type="text" class="form-control" placeholder="Time End...">
+		                </div>
+		                
+	                	<label for="exampleInputEmail1">Class Year</label>
+		                <div class="input-group">
+			                <span class="input-group-addon"><i class="fa fa-users"></i></span>
+			                <input th:field="*{year}" type="text" class="form-control" placeholder="Year...">
+		                </div>
+		                
+		          		<label for="exampleInputEmail1">Class Section</label>
+		                <div class="input-group">
+			                <span class="input-group-addon"><i class="fa fa-users"></i></span>
+			                <input th:field="*{section}" type="text" class="form-control" placeholder="Section...">
+		                </div>
+		 
+		                </form>
+					</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button id="saveSchedBtn" type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+</div>
+
+
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}">
+<head>
+<meta charset="UTF-8">
+<title>Manage Faculty</title>
+
+<th:block layout:fragment="local-styles">
+</th:block>
+
+</head>
+<body>
+	<!-- EDIT THIS FOR THE 
+                                         LAYOUT FRAGMENT NAME
+                                          YOU WANT TO APPEND THIS -->
+	<div class="content-wrapper" layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				Faculty Profile <small>Page Description</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i>Manage
+						Faculty</a></li>
+				<li class="active">Add</li>
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content container-fluid">
+			<!--------------------------
+                  | Your Page Content Here |
+                  -------------------------->
+             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-adrian">
+                Launch Default Modal
+              </button>
+
+			<div class="modal fade" id="modal-adrian">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Default Modal</h4>
+              </div>
+              <div class="modal-body">
+                <div class="box-body">
+					<form id="addFacForm" th:action="@{/faculty/save}" method="POST">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-users"></i></span>
+		                	<input  type="text" class="form-control" placeholder="Full name...">	
+						</div>
+						<br/>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-university"></i></span>
+		                	<input type="text" class="form-control" placeholder="Department...">	
+						</div>
+						<br/>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-gears"></i></span>
+		                	<input  type="text" class="form-control" placeholder="Status...">	
+						</div>
+						<br/>
+		                <div class="input-group">
+			                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+			                <input type="email" class="form-control" placeholder="Email address...">
+		                </div>
+		                <br/>
+		                
+		                <div class="input-group">
+		                	<button type="submit" class="btn btn-block btn-primary ml-auto">Save</button>
+		                </div>
+		                </form>
+					</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button id="saveFacBtn" type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+			<!-- /.modal -->
+		
+		</section>
+		<!-- /.content -->
+	</div>
+	<th:block layout:fragment="local-scripts">
+	<script>
+    $(document).ready(function() {
+        $("#saveFacBtn").click(function() {
+            $("#addFacForm").submit();
+        });
+     });
+	</script>
+	</th:block>
+</body>
+<!-- /.content-wrapper -->
+
+</html>

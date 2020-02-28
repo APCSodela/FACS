@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:security="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}" >
+
+    <link rel="stylesheet" type="text/css" th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/bower_components/Ionicons/css/ionicons.min.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/dist/css/AdminLTE.min.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/dist/css/skins/_all-skins.min.css}">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+          
+    <th:block layout:fragment="local-styles">
+
+    </th:block>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<!--Main Wrapper-->
+    <div class = "wrapper">
+        <!--Main Header-->
+        <header th:replace="fragments/header::header">
+
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside th:replace="fragments/sidebar::sidebar">
+
+        </aside>
+<!--         <div th:replace="fragments/modals::modals">
+        </div> -->
+        
+        <!-- Content Wrapper. Contains page content -->
+        <div layout:fragment="content">
+        
+
+        </div>
+
+        <footer th:replace="fragments/footer::footer">
+
+        </footer>
+    </div>
+    <!-- jQuery 3 -->
+	<!--    <script src="/bower_components/jquery/dist/jquery.min.js"></script>-->
+	    <script type="text/javascript" th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
+	    <!-- Bootstrap 3.3.7 -->
+	<!--    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
+	    <script type="text/javascript" th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+	    <!-- AdminLTE App -->
+	<!--    <script src="/dist/js/adminlte.min.js"></script>-->
+	    <script type="text/javascript" th:src="@{/dist/js/adminlte.min.js}"></script>
+	
+    <th:block layout:fragment="local-scripts">
+    </th:block>
+
+</body>
+</html>

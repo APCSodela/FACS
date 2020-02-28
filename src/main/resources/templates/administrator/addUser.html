@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Accounts | Add </title>
+
+    <th:block layout:fragment="local-styles">
+
+    </th:block>
+</head>
+<body>
+                                     <!-- EDIT THIS FOR THE 
+                                         LAYOUT FRAGMENT NAME
+                                          YOU WANT TO APPEND THIS -->
+        <div class="content-wrapper" layout:fragment="content">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Add Account
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i>Administrator</a></li>
+                    <li class="active">Add Account</li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content container-fluid">
+				<div class="box box-solid">
+					<div class="box-body">
+						<div class="row">
+							<form th:action="@{/administrator/save-user}" th:object="${userObject}" method="POST" enctype="multipart/form-data">
+								<input type="hidden" th:field="*{id}"/>
+								<div class="col-lg-12">
+									<div class="box box-primary">
+										<div class="box-header with-border">
+											<h3 class="box-title">ACCOUNT DETAILS</h3>
+										</div>
+										<!-- /.box-header -->
+										<div class="box-body">
+											
+											<small><b>PROFILE PICTURE</b></small><br>
+											<div class="form-group">
+												<input type="file" name="imagefile">
+												<p class="help-block">Select User Profile Picture</p>
+											</div>
+											<small><b>USERNAME</b></small><br>
+											<div class="col-lg-12">
+												<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-id-badge"></i></span>
+									                	<input th:field="*{username}" type="text" class="form-control" placeholder="Username" required> 	
+													</div>
+												</div>
+											</div>
+											<small><b>PASSWORD</b></small><br>
+											<div class="col-lg-12">
+												<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-key"></i></span>
+									                	<input th:field="*{password}" type="password" class="form-control" placeholder="Password" required>	
+													</div>
+												</div>
+											</div>
+											<small><b>ROLE</b></small><br>
+											<div class="col-lg-12">
+												<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-user"></i></span> 
+														<!-- <input type="text" class="form-control" placeholder="Building"> -->
+														<select th:field="*{role}" class="form-control" required>
+														<!-- th:field="*{loadDetails[__${current.index}__].building}" -->
+															<option value="" selected>Select Role</option>
+															<option value="ADMIN">Administrator</option>
+															<option value="CHECKER">Checker</option>
+															<option value="DEPT">Department</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- /.box-body -->
+									</div>
+									<!-- /.box-primary -->
+								</div>
+								<!-- /.col -->
+								<div class="col-lg-12">
+									<div class="box box-primary">
+										<div class="box-header with-border">
+											<h3 class="box-title">ACCOUNT INFORMATIONS</h3>
+										</div>
+										<!-- /.box-header -->
+										<div class="box-body">
+											<!-- TH:BLOCK -->
+											<th:block th:object="${userInfoObject}">
+											<input type="number" th:field="*{id}" hidden="hidden">
+											<div class="col-lg-12">
+												<div class="form-group">
+													<label for="">FULLNAME</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-user"></i></span>
+									                	<input th:field="*{fullname}" type="text" class="form-control" placeholder="Fullname">	
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-12">
+												<div class="form-group">
+													<label for="">OFFICE</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-university"></i></span>
+									                	<input th:field="*{office}" type="text" class="form-control" placeholder="Office">	
+													</div>
+												</div>
+											</div>
+											</th:block>
+											<!-- /TH:BLOCK -->
+										</div>
+										<!-- /.box-body -->
+									</div>
+									<!-- /.box-primary -->
+					                <button type="submit" class="btn btn-block btn-primary"><i class="fa fa-save"></i> <strong>SAVE</strong></button>
+								</div>
+								<!-- /.col -->
+			                </form>
+		                </div>
+					</div>
+				</div>
+            </section>
+            <!-- /.content -->
+        </div>
+<th:block layout:fragment="local-scripts">
+
+</th:block>
+</body>
+<!-- /.content-wrapper -->
+
+</html>
