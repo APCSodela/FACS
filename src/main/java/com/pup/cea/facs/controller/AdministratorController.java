@@ -1,6 +1,7 @@
 package com.pup.cea.facs.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pup.cea.facs.model.Ticket;
 import com.pup.cea.facs.model.UserInfo;
 import com.pup.cea.facs.model.security.UserLogin;
 import com.pup.cea.facs.service.AppUserService;
+import com.pup.cea.facs.service.TicketService;
 
 @Controller
 @RequestMapping("/administrator")
@@ -25,21 +28,19 @@ public class AdministratorController {
 	
 	@Autowired
 	AppUserService userService;
+	@Autowired
+	private TicketService ticketService;
 	
 	@RequestMapping(value="/home",method=RequestMethod.GET)
 	public String adminHome() {
 		return "administrator/administratorHome";
 	}
-	@RequestMapping(value="/view-users")
+	@RequestMapping(value="/account/view")
 	public String viewUsers(Model model) {
-		/*
-		 * System.out.println(userService.findUsers().get(1).getUserInfo().getImagedata(
-		 * ));
-		 */
 		model.addAttribute("userList",userService.findUsers());
 		return "administrator/viewUsers";
 	}
-	@RequestMapping(value="/add-user")
+	@RequestMapping(value="/account/add")
 	public String addUser(Model model) {
 		
 		UserLogin userLogin = new UserLogin();
@@ -114,6 +115,16 @@ public class AdministratorController {
 		
 		return "redirect:/administrator/view-users";
 				
+	}
+	
+	// RELATED TO RECORDS
+	
+	@RequestMapping(value="/record")
+	public String viewRecords(Model model) {
+		List<Ticket> list = ticketService.getAllRecordedTickets();
+		
+		model.addAttribute("recordList", list);
+		return "administrator/viewRecord";
 	}
 
 }

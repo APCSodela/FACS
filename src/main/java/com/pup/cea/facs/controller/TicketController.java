@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.pup.cea.facs.model.Ticket;
 import com.pup.cea.facs.service.TicketService;
@@ -54,15 +55,19 @@ public class TicketController {
 	@RequestMapping(value="/report")
 	public String generateReport(HttpServletRequest request, HttpServletResponse response) {
 		
-		List<Ticket> tickets = service.getAll();
+		List<Ticket> tickets = service.getAllPendingTickets();
 		boolean isFlag = service.generateReport(tickets, context);
 		
 		if(isFlag) {
 			String fullPath = request.getServletContext().getRealPath("resources/reports/"+"tickets.csv");
 			fileDownload(fullPath, response, "tickets.csv");
+			
+			for(Ticket ticket: tickets) {
+				ticket.setStatus("Recorded");
+				service.save(ticket);
+			}
 		}
 		
-		System.out.println("REPORT REPORT REPORT");
 		return "redirect:/ticket/view";
 	}
 	
@@ -95,13 +100,6 @@ public class TicketController {
 	
 	// RELATED TO VIEW TICKETS
 	
-	// Action to Show Ticket Details			--------- DI PA GUMAGANA ----------
-	@RequestMapping("/view/{id}/detail")
-	public String showTicketDetails() {
-		// Used to view ticket details
-		return "redirect:/ticket/view";
-	}
-	
 	// Action to Waive a Ticket
 	@RequestMapping("/view/{id}/waive")
 	public String waiveTicket(@PathVariable(name="id") Long id) {
@@ -133,7 +131,7 @@ public class TicketController {
 		ticket.setStatus("Declined");
 		
 		service.save(ticket);
-		return "redirect:/ticket/view";
+		return "redirect:/ticket/waive";
 	}
 	
 }

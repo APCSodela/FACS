@@ -76,14 +76,14 @@
 									<td th:text="*{ticket.remark}">Remark</td>
 									<td th:text="*{ticket.timearrival}">Time of Arrival</td>
 									<td th:text="*{ticket.timediff}">Time Difference</td>
-									<td th:text="*{ticket.status}">Status</td>
+									<td><span th:classappend="${ticket.status == 'Accepted'} ? 'label-success' : ''" class="label" th:text="*{ticket.status}">Status</span></td>
 									<td align="center">
 										<div class="btn-group">
-			                        		<a th:href="@{'/ticket/waive/' + ${ticket.id} + '/accept'}">
-					                      		<button type="button" class="btn btn-sm btn-success btn-flat"><i class="fa fa-check"></i></button>
+			                        		<a th:href="@{'/ticket/waive/' + ${ticket.id} + '/accept'}" th:disabled="${ticket.status == 'Accepted'} ? 'true' : 'false'" class="btn btn-sm btn-success btn-flat">
+					                      		<i class="fa fa-check"></i>
 					                      	</a>
-					                      	<a th:href="@{'/ticket/waive/' + ${ticket.id} + '/decline'}">
-					                      		<button type="button" class="btn btn-sm btn-danger btn-flat"><i class="fa fa-times"></i></button>
+					                      	<a th:href="@{'/ticket/waive/' + ${ticket.id} + '/decline'}" th:disabled="${ticket.status == 'Accepted'} ? 'true' : 'false'" class="btn btn-sm btn-danger btn-flat">
+					                      		<i class="fa fa-times"></i>
 					                      	</a>
 					                    </div>
 				                    </td>

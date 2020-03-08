@@ -23,7 +23,7 @@
                 <!-- Modules -->  <!-- Modules -->  <!-- Modules -->
                 	<th:block th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                         <li th:classappend="${#request.requestURI.startsWith('/administrator') ? 'active':''}" class="treeview" >
-	                        <a th:href="@{/administrator/view-users}">
+	                        <a href="#">
 	                        	<i class="fa  fa-user-circle"></i>
 	                            <span>Administrator</span>
 	                            <span class="pull-right-container">
@@ -39,16 +39,29 @@
               							</span>
                                     </a>
                                     <ul class="treeview-menu">
-                                    	 <li><a  th:href="@{/administrator/view-users}"><i class="fa fa-address-book"></i>View Accounts</a></li>
-                                    	  <li><a th:href="@{/administrator/add-user}"><i class="fa fa-user-plus"></i>Add Account</a></li>
+                                  		<li>
+                                   	 		<a  th:href="@{/administrator/account/view}">
+                                    	 		<i class="fa fa-address-book"></i> View Accounts
+                                    	 	</a>
+                                    	 </li>
+                           	  			 <li>
+                              	  		 	<a th:href="@{/administrator/account/add}">
+                                   	  			<i class="fa fa-user-plus"></i> Add Account
+                                    	  	</a>
+                              	  		</li>
                                     </ul>
                                 </li>
+                                <li>
+									<a th:href="@{/administrator/record}"> 
+                                  		<i class="fa fa-folder"></i> Records
+                              		</a>
+	                          	</li>
                             </ul>
                         </li>
                		</th:block>
 					<th:block th:if="${#authorization.expression('hasRole(''ROLE_CHECKER'')||hasRole(''ROLE_ADMIN'')')}">
                       	<li th:classappend="${#request.requestURI.startsWith('/daily') ? 'active':''}" class="treeview" >
-                          	<a th:href="@{/daily}">
+                          	<a href="#">
                              	<i class="fa  fa-clipboard"></i>
                              	<span>Daily</span>
                              	<span class="pull-right-container">
@@ -58,7 +71,6 @@
                     		<ul class="treeview-menu">
 	                       		<li>
 									<a th:href="@{/daily/checklist}"> 
-                                      	<!-- <a data-toggle="modal" data-target="#addFacultyModal"> -->
                                   		<i class="fa fa-edit"></i> Checklists
                               		</a>
 	                          	</li>
@@ -72,7 +84,7 @@
                    	</th:block>
 					<th:block th:if="${#authorization.expression('hasRole(''ROLE_CHECKER'')||hasRole(''ROLE_DEPT'')||hasRole(''ROLE_ADMIN'')')}">
                     	<li th:classappend="${#request.requestURI.startsWith('/faculty') ? 'active':''}" class="treeview" >
-                        	<a th:href="@{/faculty}">
+                        	<a href="">
                         		<i class="fa  fa-users"></i>
 	                            <span>Faculties</span>
 	                            <span class="pull-right-container">
@@ -96,7 +108,7 @@
                    	</th:block>
                     <th:block th:if="${#authorization.expression('hasRole(''ROLE_CHECKER'')||hasRole(''ROLE_DEPT'')||hasRole(''ROLE_ADMIN'')')}">
                        	<li th:classappend="${#request.requestURI.startsWith('/ticket') ? 'active':''}" class="treeview" >
-                        	<a th:href="@{/ticket}">
+                        	<a href="#">
 	                           	<i class="fa  fa-ticket"></i>
                                	<span>Tickets</span>
                            	   	<span class="pull-right-container">
@@ -119,7 +131,6 @@
                            	</ul>
                   		</li>
                    	</th:block>
-<!--                    	<li><a href="#"><i class="fa fa-line-chart"></i> <span>Analytics</span></a></li> -->
                 </ul>
                 <!-- /.sidebar-menu -->
         	</section>

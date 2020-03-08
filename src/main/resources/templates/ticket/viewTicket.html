@@ -122,7 +122,7 @@
 									          	<!-- /.modal-dialog -->
 								        	</div>
 									        <!-- /.modal -->
-											<a th:href="@{'/ticket/view/' + ${ticket.id} + '/waive'}" class="btn btn-sm btn-primary btn-flat">
+											<a th:disabled="${ticket.status == 'Declined'} ? 'true' : 'false'" th:href="@{'/ticket/view/' + ${ticket.id} + '/waive'}" class="btn btn-sm btn-primary btn-flat">
 												<i class="fa fa-ticket"></i> Waive
 											</a>
 					                    </div>
@@ -148,13 +148,13 @@
 						      	</div>
 				              	<div class="modal-body">
 									<p> 
-										Generate the CSV File Report?
+										Generate the Report?
 									</p>
 								</div>
 								<div class="modal-footer">
 					                <button type="button" class="btn btn-sm btn-outline pull-left" data-dismiss="modal">CLOSE</button>
-					                <a type="button" id="confirmReport">
-					                	<button type="button" class="btn btn-sm btn-outline"><strong>CONFIRM</strong></button>
+					                <a id="confirmReport" type="button">
+					               		<button class="btn btn-sm btn-outline"><strong>CONFIRM</strong></button>
 					                </a>
 				              	</div>
 			            	</div>
@@ -180,9 +180,10 @@
 			<script src="/facs/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
 			<script src="/facs/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
 			<script src="/facs/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
-    
+			
 			<script>
 				$(function () {
+					
 					$('#ticketTable').DataTable({
 		       			'paging'      : false,
 						'lengthChange': false,
@@ -211,6 +212,7 @@
 						var modal = $(this);
 						modal.find('#confirmReport').attr('href', "/ticket/report");
 					});
+					
 				});
 			</script>
 		</th:block>

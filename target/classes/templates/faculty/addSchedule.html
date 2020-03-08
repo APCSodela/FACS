@@ -1,449 +1,443 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default_layout}">
-<head>
-<meta charset="UTF-8">
-<title>Faculties | Profile</title>
-
-<th:block layout:fragment="local-styles">
-	<!-- Bootstrap time Picker -->
-	<link rel="stylesheet" href="/plugins/timepicker/bootstrap-timepicker.min.css">
-	<!-- Sweetalert Css -->
-    <link href="/facs/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
-</th:block>
-</head>
-<body>
-	<!-- EDIT THIS FOR THE 
-                                         LAYOUT FRAGMENT NAME
-                                          YOU WANT TO APPEND THIS -->
-	<div class="content-wrapper" layout:fragment="content">
-		<!-- Content Header (Page header) -->
-		<section class="content-header">
-			<h1>
-				Schedule
-				<small>Page Description</small>
-			</h1>
-			<ol class="breadcrumb">
-				<li><a href="#"><i class="fa fa-dashboard"></i>Faculties</a></li>
-				<li class="active">View Faculty</li>
-				<li class="active">View Faculty Profile</li>
-				<li class="active">Add Schedule</li>
-			</ol>
-		</section>
-
-		<!-- Main content -->
-		<section class="content container-fluid">
-
-			<div class="box box-solid">
-				<div class="box-body">
-					<div class="row">
-						<form th:object="${loadForm}" id="addSchedForm" th:action="@{'/faculty/profile/' + ${facid} + '/schedule/save' }" method="POST">
-							<input th:field="*{load.id}" type="hidden">
-							<div class="col-lg-12">
-								<div class="box box-primary">
-									<div class="box-header with-border">
-										<h3 class="box-title">LOAD DESCRIPTION</h3>
-									</div>
-									<div class="box-body">
-									
-										<div class="col-lg-6">
-											<div class="form-group">
-												<label for="">Subject Name</label>
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-university"></i></span> 
-													<input th:field="*{load.subjectName}" type="text" class="form-control" placeholder="Subject Name" required>
-												</div>
-											</div>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+				layout:decorate="~{layouts/default_layout}">
+	<head>
+	<meta charset="UTF-8">
+	<title>Faculties | Profile</title>
+	
+		<!-- Bootstrap Time Picker -->
+		<link rel="stylesheet" href="/plugins/timepicker/bootstrap-timepicker.min.css">
+		<!-- Sweet Alert Style -->
+	    <link href="/facs/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+	    
+	</head>
+	<body>
+		<div class="content-wrapper" layout:fragment="content">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					Schedule
+				</h1>
+				<ol class="breadcrumb">
+					<li><i class="fa fa-dashboard"></i> Faculties</li>
+					<li>View Faculty</li>
+					<li>View Faculty Profile</li>
+					<li class="active">Add Schedule</li>
+				</ol>
+			</section>
+	
+			<!-- Main content -->
+			<section class="content container-fluid">
+				<div class="box box-solid">
+					<div class="box-body">
+						<div class="row">
+							<form th:object="${loadForm}" id="addSchedForm" th:action="@{'/faculty/profile/' + ${facid} + '/schedule/save' }" method="POST">
+							
+								<input th:field="*{load.id}" type="hidden">
+								
+								<div class="col-lg-12">
+									<div class="box box-primary">
+										<div class="box-header with-border">
+											<h3 class="box-title">LOAD DESCRIPTION</h3>
 										</div>
-										<div class="col-lg-6">
-											<div class="form-group">
-												<label for="">Subject Code</label>
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-university"></i></span> 
-													<input th:field="*{load.subjectCode}" type="text" class="form-control" placeholder="Subject Code" required>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="form-group">
-												<label for="">Unit</label>
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-university"></i></span> 
-													<input th:field="*{load.unit}" type="number" class="form-control" placeholder="Unit" required>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="form-group">
-												<label for="">Subject Reference</label>
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-university"></i></span> 
-													<select th:field="*{load.subjectRef}" class="form-control" required>
-														<option value="" selected>Select Subject Reference</option>
-														<option value="College">College</option>
-														<option value="Open University">Open University</option>
-														<option value="Graduate School">Graduate School</option>
-														<option value="Post Bac">Post Bac</option>
-														<option value="Law">Law</option>
-														<option value="iTech">iTech</option>
-													</select>
-												</div>
-											</div>
-										</div>
-
-										<div class="col-lg-3">
-											<div class="form-group">
-												<label for="">Effectivity</label>
-												<div class="input-group">
-													<div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
+										<div class="box-body">
+										
+											<div class="col-lg-6">
+												<div class="form-group">
+													<label for="">Subject Name</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-university"></i></span> 
+														<input th:field="*{load.subjectName}" type="text" class="form-control" placeholder="Subject Name" required>
 													</div>
-													<input th:field="*{load.effectivity}" id="datemask2" type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask placeholder="Effectivity" required>
 												</div>
 											</div>
-										</div>
-
-										<div class="col-lg-3">
-											<div class="form-group">
-												<label for="">Load Type</label>
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-university"></i></span> 
-													<select th:field="*{load.loadType}" class="form-control" required>
-														<option value="" selected>Select Load Type</option>
-														<option value="Regular">Regular</option>
-														<option value="Part Time">Part Time</option>
-														<option value="Temporary Substitution">Temporary Substitution</option>
-														<option value="Tutorial">Tutorial</option>
-													</select>
+											<div class="col-lg-6">
+												<div class="form-group">
+													<label for="">Subject Code</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-university"></i></span> 
+														<input th:field="*{load.subjectCode}" type="text" class="form-control" placeholder="Subject Code" required>
+													</div>
 												</div>
 											</div>
-										</div>
-										
-										<div class="col-lg-6">
-											<div class="form-group">
-												<label for="">Class Course</label>
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-users"></i></span> 
-													<select th:field="*{load.classCourse}" class="form-control" required>
-														<option value="" selected>Select Class Course</option>
-														<option value="BSCPE">BS Computer Engineering</option>
-														<option value="BSCE">BS Civil Engineering</option>
-														<option value="BSECE">BS Electronics Engineering</option>
-														<option value="BSEE">BS Electrical Engineering</option>
-														<option value="BSIE">BS Industrial Engineering</option>
-														<option value="BSME">BS Mechanical Engineering</option>
-														<option value="BSREM">BS Railway Engineering</option>
-														<option value="BSARCH">BS Architecture</option>
-														<option value="BSID">BS Interior Design</option>
-													</select>
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label for="">Unit</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-university"></i></span> 
+														<input th:field="*{load.unit}" type="number" class="form-control" placeholder="Unit" required>
+													</div>
 												</div>
 											</div>
-										</div>
-										
-										<div class="col-lg-3">
-											<div class="form-group">
-												<label for="">Year</label>
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-users"></i></span> 
-													<input th:field="*{load.classYear}" type="number" class="form-control" placeholder="Year" required>
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label for="">Subject Reference</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-university"></i></span> 
+														<select th:field="*{load.subjectRef}" class="form-control" required>
+															<option value="" selected>Select Subject Reference</option>
+															<option value="College">College</option>
+															<option value="Open University">Open University</option>
+															<option value="Graduate School">Graduate School</option>
+															<option value="Post Bac">Post Bac</option>
+															<option value="Law">Law</option>
+															<option value="iTech">iTech</option>
+														</select>
+													</div>
 												</div>
 											</div>
-										</div>
-										
-										<div class="col-lg-3">
-											<div class="form-group">
-												<label for="">Section</label>
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-users"></i></span> 
-													<input th:field="*{load.classSection}" type="text" class="form-control" placeholder="Section" required>
+	
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label for="">Effectivity</label>
+													<div class="input-group">
+														<div class="input-group-addon">
+															<i class="fa fa-calendar"></i>
+														</div>
+														<input th:field="*{load.effectivity}" id="datemask2" type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask placeholder="Effectivity" required>
+													</div>
 												</div>
 											</div>
-										</div>
-										
-									</div>
-								</div>
-							</div>
-
-							<div class="col-lg-12">
-								<div class="box box-primary">
-									<div class="box-header with-border">
-										<h3 class="box-title">LOAD DETAILS</h3>
-									</div>
-									<div class="box-body">
-										<div class="col-lg-12 details-wrapper">
+	
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label for="">Load Type</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-university"></i></span> 
+														<select th:field="*{load.loadType}" class="form-control" required>
+															<option value="" selected>Select Load Type</option>
+															<option value="Regular">Regular</option>
+															<option value="Part Time">Part Time</option>
+															<option value="Temporary Substitution">Temporary Substitution</option>
+															<option value="Tutorial">Tutorial</option>
+														</select>
+													</div>
+												</div>
+											</div>
 											
-											<div th:each="loadDetail, current : *{loadDetails}" class="row" style="border-bottom: 1px solid #f4f4f4; padding-bottom: 10px">
-												<input th:field="*{loadDetails[__${current.index}__].id}" type="hidden">
-												<input th:field="*{loadDetails[__${current.index}__].schedule.id}" type="hidden">
-												<div class="col-lg-6">
-													<div class="form-group">
-														<label for="">Building</label>
-														<div class="input-group">
-															<span class="input-group-addon"><i class="fa fa-building"></i></span> 
-															<!-- <input type="text" class="form-control" placeholder="Building"> -->
-															<select th:field="*{loadDetails[__${current.index}__].building}" class="form-control" required>
-															<!-- th:field="*{loadDetails[__${current.index}__].building}" -->
-																<option value="" selected>Select Building</option>
-																<option value="CEA">College of Engineering and Architecture</option>
-																<option value="CDL">Condotel</option>
-															</select>
-														</div>
+											<div class="col-lg-6">
+												<div class="form-group">
+													<label for="">Class Course</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-users"></i></span> 
+														<select th:field="*{load.classCourse}" class="form-control" required>
+															<option value="" selected>Select Class Course</option>
+															<option value="BSCPE">BS Computer Engineering</option>
+															<option value="BSCE">BS Civil Engineering</option>
+															<option value="BSECE">BS Electronics Engineering</option>
+															<option value="BSEE">BS Electrical Engineering</option>
+															<option value="BSIE">BS Industrial Engineering</option>
+															<option value="BSME">BS Mechanical Engineering</option>
+															<option value="BSREM">BS Railway Engineering</option>
+															<option value="BSARCH">BS Architecture</option>
+															<option value="BSID">BS Interior Design</option>
+														</select>
 													</div>
 												</div>
-
-												<div class="col-lg-6">
-													<div class="form-group">
-														<label for="">Room</label>
-														<div class="input-group">
-															<span class="input-group-addon"><i class="fa fa-building"></i></span> 
-															<input th:field="*{loadDetails[__${current.index}__].roomNumber}" type="number" class="form-control" placeholder="Room" required>
-														</div>
-													</div>
-												</div>
-
-												<div class="col-lg-6">
-													<div class="form-group">
-														<label for="">Day</label>
-														<div class="input-group">
-															<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-															<!-- <input th:field="*{day}" type="text" class="form-control" placeholder="Day">  -->
-															<select th:field="*{loadDetails[__${current.index}__].day}" class="form-control" required>
-															<!-- th:field="*{loadDetails[__${current.index}__].day}" -->
-																<option value="" selected>Select Day</option>
-																<option value="Monday">Monday</option>
-																<option value="Tuesday">Tuesday</option>
-																<option value="Wednesday">Wednesday</option>
-																<option value="Thursday">Thursday</option>
-																<option value="Friday">Friday</option>
-																<option value="Saturday">Saturday</option>
-																<option value="Sunday">Sunday</option>
-															</select>
-														</div>
-													</div>
-												</div>
-
-												<div class="col-lg-6">
-													<div class="row">
-														<!-- time Picker -->
-														<div class="col-sm-6 bootstrap-timepicker">
-															<div class="form-group">
-																<label>Time Start:</label>
-
-																<div class="input-group">
-																	<div class="input-group-addon">
-																		<i class="fa fa-clock-o"></i>
-																	</div>
-																	<input th:field="*{loadDetails[__${current.index}__].timeStart}" type="text" class="form-control timepicker" required>
-																</div>
-																<!-- /.input group -->
-															</div>
-															<!-- /.form group -->
-														</div>
-
-														<!-- time Picker -->
-														<div class="col-sm-6 bootstrap-timepicker">
-															<div class="form-group">
-																<label>Time End:</label>
-
-																<div class="input-group">
-																	<input th:field="*{loadDetails[__${current.index}__].timeEnd}" type="text" class="form-control timepicker" required>
-
-																	<div class="input-group-addon">
-																		<i class="fa fa-clock-o"></i>
-																	</div>
-																</div>
-																<!-- /.input group -->
-															</div>
-															<!-- /.form group -->
-														</div>
-													</div>
-												</div>
-												<!-- END OF ALL INPUT FIELDS IN DETAILS -->
-												<div class="col-lg-12">
-													<button class="btn btn-block btn-danger remove-detail-btn">Remove Load Detail</button>
-												</div>
-
 											</div>
+											
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label for="">Year</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-users"></i></span> 
+														<input th:field="*{load.classYear}" type="number" class="form-control" placeholder="Year" required>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label for="">Section</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-users"></i></span> 
+														<input th:field="*{load.classSection}" type="text" class="form-control" placeholder="Section" required>
+													</div>
+												</div>
+											</div>
+											
 										</div>
-
 									</div>
 								</div>
+	
+								<div class="col-lg-12">
+									<div class="box box-primary">
+										<div class="box-header with-border">
+											<h3 class="box-title">LOAD DETAILS</h3>
+										</div>
+										<div class="box-body">
+											<div class="col-lg-12 details-wrapper">
+												
+												<div th:each="loadDetail, current : *{loadDetails}" class="row" style="border-bottom: 1px solid #f4f4f4; padding-bottom: 10px">
+													<input th:field="*{loadDetails[__${current.index}__].id}" type="hidden">
+													<input th:field="*{loadDetails[__${current.index}__].schedule.id}" type="hidden">
+													<div class="col-lg-6">
+														<div class="form-group">
+															<label for="">Building</label>
+															<div class="input-group">
+																<span class="input-group-addon"><i class="fa fa-building"></i></span> 
+																<select th:field="*{loadDetails[__${current.index}__].building}" class="form-control" required>
+																	<option value="" selected>Select Building</option>
+																	<option value="CEA">College of Engineering and Architecture</option>
+																	<option value="CDL">Condotel</option>
+																</select>
+															</div>
+														</div>
+													</div>
+	
+													<div class="col-lg-6">
+														<div class="form-group">
+															<label for="">Room</label>
+															<div class="input-group">
+																<span class="input-group-addon"><i class="fa fa-building"></i></span> 
+																<input th:field="*{loadDetails[__${current.index}__].roomNumber}" type="number" class="form-control" placeholder="Room" required>
+															</div>
+														</div>
+													</div>
+	
+													<div class="col-lg-6">
+														<div class="form-group">
+															<label for="">Day</label>
+															<div class="input-group">
+																<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+																<!-- <input th:field="*{day}" type="text" class="form-control" placeholder="Day">  -->
+																<select th:field="*{loadDetails[__${current.index}__].day}" class="form-control" required>
+																<!-- th:field="*{loadDetails[__${current.index}__].day}" -->
+																	<option value="" selected>Select Day</option>
+																	<option value="Monday">Monday</option>
+																	<option value="Tuesday">Tuesday</option>
+																	<option value="Wednesday">Wednesday</option>
+																	<option value="Thursday">Thursday</option>
+																	<option value="Friday">Friday</option>
+																	<option value="Saturday">Saturday</option>
+																	<option value="Sunday">Sunday</option>
+																</select>
+															</div>
+														</div>
+													</div>
+	
+													<div class="col-lg-6">
+														<div class="row">
+															<!-- time Picker -->
+															<div class="col-sm-6 bootstrap-timepicker">
+																<div class="form-group">
+																	<label>Time Start:</label>
+	
+																	<div class="input-group">
+																		<div class="input-group-addon">
+																			<i class="fa fa-clock-o"></i>
+																		</div>
+																		<input th:field="*{loadDetails[__${current.index}__].timeStart}" type="text" class="form-control timepicker" required>
+																	</div>
+																	<!-- /.input group -->
+																</div>
+																<!-- /.form group -->
+															</div>
+	
+															<!-- Time Picker -->
+															<div class="col-sm-6 bootstrap-timepicker">
+																<div class="form-group">
+																	<label>Time End:</label>
+	
+																	<div class="input-group">
+																		<input th:field="*{loadDetails[__${current.index}__].timeEnd}" type="text" class="form-control timepicker" required>
+	
+																		<div class="input-group-addon">
+																			<i class="fa fa-clock-o"></i>
+																		</div>
+																	</div>
+																	<!-- /.input group -->
+																</div>
+																<!-- /.form group -->
+															</div>
+														</div>
+													</div>
+													<!-- END OF ALL INPUT FIELDS IN DETAILS -->
+													<div class="col-lg-12">
+														<button class="btn btn-block btn-danger remove-detail-btn">Remove Load Detail</button>
+													</div>
+	
+												</div>
+											</div>
+	
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- /.row -->
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer">
+						<div class="row">
+							<div class="col-lg-2 col-md-2 col-sm-4  pull-right">
+								<button class="btn btn-block btn-primary " type="submit" id="saveSchedBtn">Save Schedule</button>
 							</div>
-						</form>
-					</div>
-
-				</div>
-				<div class="box-footer">
-					<div class="row">
-						<div class="col-lg-2 col-md-2 col-sm-4  pull-right">
-							<button class="btn btn-block btn-primary " type="submit" id="saveSchedBtn">Save Schedule</button>
-						</div>
-						<div class="col-lg-2 col-md-2 col-sm-4 pull-right">
-							<button class="btn btn-block btn-warning " id="add-detail-btn">Add Load Detail</button>
+							<div class="col-lg-2 col-md-2 col-sm-4 pull-right">
+								<button class="btn btn-block btn-warning " id="add-detail-btn">Add Load Detail</button>
+							</div>
 						</div>
 					</div>
+					<!-- /.box-footer -->
 				</div>
-
-			</div>
-
-
-		</section>
-		<!-- /.content -->
-	</div>
-	<th:block layout:fragment="local-scripts">
-		<!-- bootstrap time picker -->
-		<script src="/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-		<!-- InputMask -->
-		<script src="/plugins/input-mask/jquery.inputmask.js"></script>
-		<script src="/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-		<script src="/plugins/input-mask/jquery.inputmask.extensions.js"></script>
-	    <!-- SweetAlert Plugin Js -->
-    	<script src="/facs/plugins/sweetalert/sweetalert.min.js"></script>
-		<script>
-			$(function() {
-				/* var number = [[${number}]];
-			    var message = "[[${message}]]"; */
-				
-				//Datemask2 mm/dd/yyyy
-				$('#datemask2').inputmask('mm/dd/yyyy', {
-					'placeholder' : 'mm/dd/yyyy'
-				})
-				//Timepicker
-				$('.timepicker').timepicker({
-					showInputs : false
-				})
-				$("#saveSchedBtn").click(function() {
-					$("#addSchedForm").submit();
-				})
-
-				var max_fields = 4; //maximum input boxes allowed is 5
-				var wrapper = $(".details-wrapper"); //Fields wrapper
-				var add_button = $("#add-detail-btn"); //Add button ID
-
-				var x = [[${detailCount}]] -1; //initlal text box count
-				$(add_button)
+				<!-- /.box -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<th:block layout:fragment="local-scripts">
+			<!-- Bootstrap Time Picker -->
+			<script src="/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+			<!-- InputMask -->
+			<script src="/plugins/input-mask/jquery.inputmask.js"></script>
+			<script src="/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+			<script src="/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+		    <!-- SweetAlert Plugin Js -->
+	    	<script src="/facs/plugins/sweetalert/sweetalert.min.js"></script>
+			<script>
+				$(function() {
+					
+					//Datemask2 mm/dd/yyyy
+					$('#datemask2').inputmask('mm/dd/yyyy', {
+						'placeholder' : 'mm/dd/yyyy'
+					});
+					
+					// Timepicker
+					$('.timepicker').timepicker({
+						showInputs : false
+					});
+					
+					$("#saveSchedBtn").click(function() {
+						$("#addSchedForm").submit();
+					});
+	
+					var max_fields = 4; //maximum input boxes allowed is 5
+					var wrapper = $(".details-wrapper"); //Fields wrapper
+					var add_button = $("#add-detail-btn"); //Add button ID
+	
+					var x = [[${detailCount}]] -1; //initlal text box count
+					$(add_button)
 						.click(
-								function(e) { //on add input button click
-									e.preventDefault();
-									if (x < max_fields) { //max input box allowed
-										x++; //text box increment
-										$(wrapper)
-												.append(
-																
-																  '<div class="row" style="border-bottom: 1px solid #f4f4f4;padding-bottom:15px">'
-																+ '<input id="loadDetails' + x + '.id" name="loadDetails[' + x + '].id" type="hidden" value="0">'
-																+ '<input id="loadDetails' + x + '.schedule.id" name="loadDetails[' + x + '].schedule.id" type="hidden" value="0">'
-																+ '<div class="col-lg-6">'
-																+ '<div class="form-group">'
-																+ '<label for="">Building</label>'
-																+ '<div class="input-group">'
-																+ '<span class="input-group-addon"><i class="fa fa-building"></i></span>'
-																+ '<select id="loadDetails' + x + '.building" name="loadDetails[' + x + '].building" class="form-control" value="" required>'
-																+ '<option value="" selected>Select Building</option>'
-																+ '<option value="CEA">College of Engineering and Architecture</option>'
-																+ '<option value="CDL">Condotel</option>'
-																+ '</select>'
-																+ '</div>'
-																+ '</div>'
-																+ '</div>'
-																+ '<div class="col-lg-6">'
-																+ '<div class="form-group">'
-																+ '<label for="">Room</label>'
-																+ '<div class="input-group">'
-																+ '<span class="input-group-addon"><i class="fa fa-building"></i></span> <input id="loadDetails' + x + '.roomNumber" name="loadDetails[' + x + '].roomNumber" type="text" class="form-control" placeholder="Room" value="" required>'
-																+ '</div>'
-																+ '</div>'
-																+ '</div>'
-																+
+							function(e) { //on add input button click
+								e.preventDefault();
+								if (x < max_fields) { //max input box allowed
+									x++; //text box increment
+									$(wrapper)
+										.append(		
+											  '<div class="row" style="border-bottom: 1px solid #f4f4f4;padding-bottom:15px">'
+											+ '<input id="loadDetails' + x + '.id" name="loadDetails[' + x + '].id" type="hidden" value="0">'
+											+ '<input id="loadDetails' + x + '.schedule.id" name="loadDetails[' + x + '].schedule.id" type="hidden" value="0">'
+											+ '<div class="col-lg-6">'
+											+ '<div class="form-group">'
+											+ '<label for="">Building</label>'
+											+ '<div class="input-group">'
+											+ '<span class="input-group-addon"><i class="fa fa-building"></i></span>'
+											+ '<select id="loadDetails' + x + '.building" name="loadDetails[' + x + '].building" class="form-control" value="" required>'
+											+ '<option value="" selected>Select Building</option>'
+											+ '<option value="CEA">College of Engineering and Architecture</option>'
+											+ '<option value="CDL">Condotel</option>'
+											+ '</select>'
+											+ '</div>'
+											+ '</div>'
+											+ '</div>'
+											+ '<div class="col-lg-6">'
+											+ '<div class="form-group">'
+											+ '<label for="">Room</label>'
+											+ '<div class="input-group">'
+											+ '<span class="input-group-addon"><i class="fa fa-building"></i></span> <input id="loadDetails' + x + '.roomNumber" name="loadDetails[' + x + '].roomNumber" type="text" class="form-control" placeholder="Room" value="" required>'
+											+ '</div>'
+											+ '</div>'
+											+ '</div>'
+											+
 
-																'<div class="col-lg-6">'
-																+ '<div class="form-group">'
-																+ '<label for="">Day</label>'
-																+ '<div class="input-group">'
-																+ '<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>'
-																+ '<select id="loadDetails' + x + '.day" name="loadDetails[' + x + '].day" class="form-control" value="" required>'
-																+ '<option value="" selected>Select Day</option>'
-																+ '<option value="Monday">Monday</option>'
-																+ '<option value="Tuesday">Tuesday</option>'
-																+ '<option value="Wednesday">Wednesday</option>'
-																+ '<option value="Thursday">Thursday</option>'
-																+ '<option value="Friday">Friday</option>'
-																+ '<option value="Saturday">Saturday</option>'
-																+ '<option value="Sunday">Sunday</option>'
-																+ '</select>'
-																+ '</div>'
-																+ '</div>'
-																+ '</div>'
-																+
+											'<div class="col-lg-6">'
+											+ '<div class="form-group">'
+											+ '<label for="">Day</label>'
+											+ '<div class="input-group">'
+											+ '<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>'
+											+ '<select id="loadDetails' + x + '.day" name="loadDetails[' + x + '].day" class="form-control" value="" required>'
+											+ '<option value="" selected>Select Day</option>'
+											+ '<option value="Monday">Monday</option>'
+											+ '<option value="Tuesday">Tuesday</option>'
+											+ '<option value="Wednesday">Wednesday</option>'
+											+ '<option value="Thursday">Thursday</option>'
+											+ '<option value="Friday">Friday</option>'
+											+ '<option value="Saturday">Saturday</option>'
+											+ '<option value="Sunday">Sunday</option>'
+											+ '</select>'
+											+ '</div>'
+											+ '</div>'
+											+ '</div>'
+											+
+	
+											'<div class="col-lg-6">'
+											+ '<div class="row">'
+											+ '<!-- time Picker -->'
+											+ '<div class="col-sm-6 bootstrap-timepicker">'
+											+ '<div class="form-group">'
+											+ '<label>Time Start:</label>'
+											+
 
-																'<div class="col-lg-6">'
-																+ '<div class="row">'
-																+ '<!-- time Picker -->'
-																+ '<div class="col-sm-6 bootstrap-timepicker">'
-																+ '<div class="form-group">'
-																+ '<label>Time Start:</label>'
-																+
+											'<div class="input-group">'
+											+ '<div class="input-group-addon">'
+											+ '<i class="fa fa-clock-o"></i>'
+											+ '</div>'
+											+ '<input id="loadDetails' + x + '.timeStart" name="loadDetails[' + x + '].timeStart" type="text" class="form-control timepicker" required>'
+											+ '</div>'
+											+ '<!-- /.input group -->'
+											+ '</div>'
+											+ '<!-- /.form group -->'
+											+ '</div>'
+											+
 
-																'<div class="input-group">'
-																+ '<div class="input-group-addon">'
-																+ '<i class="fa fa-clock-o"></i>'
-																+ '</div>'
-																+ '<input id="loadDetails' + x + '.timeStart" name="loadDetails[' + x + '].timeStart" type="text" class="form-control timepicker" required>'
-																+ '</div>'
-																+ '<!-- /.input group -->'
-																+ '</div>'
-																+ '<!-- /.form group -->'
-																+ '</div>'
-																+
+											'<!-- time Picker -->'
+											+ '<div class="col-sm-6 bootstrap-timepicker">'
+											+ '<div class="form-group">'
+											+ '<label>Time End:</label>'
+											+
 
-																'<!-- time Picker -->'
-																+ '<div class="col-sm-6 bootstrap-timepicker">'
-																+ '<div class="form-group">'
-																+ '<label>Time End:</label>'
-																+
-
-																'<div class="input-group">'
-																+ '<input id="loadDetails' + x + '.timeEnd" name="loadDetails[' + x + '].timeEnd" type="text" class="form-control timepicker" required>'
-																+ '<div class="input-group-addon">'
-																+ '<i class="fa fa-clock-o"></i>'
-																+ '</div>'
-																+ '</div>'
-																+ '<!-- /.input group -->'
-																+ '</div>'
-																+ '<!-- /.form group -->'
-																+ '</div>'
-																+ '</div>'
-																+ '</div>'
-																+ '<!-- END OF ALL INPUT FIELDS IN DETAILS -->'
-																+ '<div class="col-lg-12">'
-																+ '<button class="btn btn-block btn-danger remove-detail-btn">Remove Load Detail</button>'
-																+ '</div>'
-																+ '</div>'
-
-												)
-										//Timepicker
-										$('.timepicker').timepicker({
-											showInputs : false
-										})
-									}else{
-								    	swal("Maximum Details Reached!", "Unable to add another detail.");
-									}
-								});
+											'<div class="input-group">'
+											+ '<input id="loadDetails' + x + '.timeEnd" name="loadDetails[' + x + '].timeEnd" type="text" class="form-control timepicker" required>'
+											+ '<div class="input-group-addon">'
+											+ '<i class="fa fa-clock-o"></i>'
+											+ '</div>'
+											+ '</div>'
+											+ '<!-- /.input group -->'
+											+ '</div>'
+											+ '<!-- /.form group -->'
+											+ '</div>'
+											+ '</div>'
+											+ '</div>'
+											+ '<!-- END OF ALL INPUT FIELDS IN DETAILS -->'
+											+ '<div class="col-lg-12">'
+											+ '<button class="btn btn-block btn-danger remove-detail-btn">Remove Load Detail</button>'
+											+ '</div>'
+											+ '</div>'
+										)
+										
+							//Timepicker
+							$('.timepicker').timepicker({
+								showInputs : false
+							});
+									
+						} else {
+					    	swal("Maximum Details Reached!", "Unable to add another detail.");
+						}
+					});
+					
 					$(wrapper).on("click", ".remove-detail-btn", function(e) { //user click on remove field
 						e.preventDefault();
-						if(x>0){
+						if(x>0) {
 							$(this).parent().parent('.row').remove();
 							x--;
-						}else{
+						}else {
 							swal("Unable to Remove Detail!", "Last detail cant be removed.");
 						}
-						
-						
-					})
-				
-			});
-		</script>
-	</th:block>
-</body>
-<!-- /.content-wrapper -->
-
+					});
+					
+				});
+			</script>
+		</th:block>
+	</body>
 </html>

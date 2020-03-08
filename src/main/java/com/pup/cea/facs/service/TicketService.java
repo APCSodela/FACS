@@ -42,6 +42,11 @@ public class TicketService {
 		return repo.getAllWaivedTickets();
 	}
 	
+	// RELATED TO RECORDS
+	public List<Ticket> getAllRecordedTickets() {
+		return repo.getAllRecordedTickets();
+	}
+	
 	// RELATED TO GENERATING CSV REPORT
 	public boolean generateReport(List<Ticket> tickets, ServletContext context) {
 		
@@ -73,10 +78,5 @@ public class TicketService {
 			return false;
 		}
 	}
-
-
-	
-	// Notification Email
-	
 	
 }

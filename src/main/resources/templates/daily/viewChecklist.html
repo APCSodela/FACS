@@ -8,7 +8,7 @@
 	
 		<!-- Bootstrap Time Picker -->
 		<link rel="stylesheet" href="/plugins/timepicker/bootstrap-timepicker.min.css">
-		<!-- JQuery DataTable Css -->
+		<!-- JQuery DataTable Style -->
 		<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 		<!-- Custom JQueryDT Style -->
 		<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
@@ -98,8 +98,8 @@
 											      	</div>
 									              	<div class="modal-body">
 														<div class="box-body box-primary">
-															<img class="profile-user-img img-responsive img-circle" alt="User profile picture"
-															th:src="@{${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() != null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getIconImage()} : '/dist/img/default-50x50.gif'}">
+															<img class="profile-user-img img-responsive img-circle" alt="User Profile Picture"
+																th:src="@{${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() != null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getIconImage()} : '/dist/img/default-50x50.gif'}">
 															<h3 class="profile-username text-center" id="facultyname">Faculty Name</h3>
 															<p class="text-muted text-center" id="department">Department</p>
 															<div class="list-group list-group-unbordered">
@@ -128,12 +128,12 @@
 									<td>
 										<div class="btn-group-vertical">
 											<!-- PRESENT BUTTON -->
-					                      	<a th:href="@{'/daily/checklist/' + ${checklist.id} + '/present'}" class="btn btn-sm btn-flat btn-success" id="presentBtn">
+					                      	<a th:href="@{'/daily/checklist/' + ${checklist.id} + '/present'}" class="btn btn-sm btn-flat btn-social btn-success" id="presentBtn">
 												<i class="fa fa-check"></i> <strong>PRESENT</strong>
 					                      	</a>
 					                      	<!-- /PRESENT  -->
 					                      	<!-- LATE BUTTON -->
-					                      	<a  data-toggle="modal" th:attr="data-object-id=${checklist.id}, data-target='#modal-late'" class="btn btn-sm btn-flat btn-warning">
+					                      	<a  data-toggle="modal" th:attr="data-object-id=${checklist.id}, data-target='#modal-late'" class="btn btn-sm btn-flat btn-social btn-warning ">
 												<i class="fa fa-clock-o"></i> <strong>LATE</strong>
 					                      	</a>
 					                      	<!-- /LATE -->
@@ -175,7 +175,7 @@
 								        	</div>
 									        <!-- /.modal -->
 									        <!-- ABSENT BUTTON -->
-					                      	<a th:href="@{'/daily/checklist/' + ${checklist.id} + '/absent'}" class="btn btn-sm btn-flat btn-danger" id="absentBtn">
+					                      	<a th:href="@{'/daily/checklist/' + ${checklist.id} + '/absent'}" class="btn btn-sm btn-flat btn-social btn-danger" id="absentBtn">
 												<i class="fa fa-times"></i> <strong>ABSENT</strong>
 					                      	</a>
 					                      	<!-- /ABSENT -->
@@ -236,7 +236,7 @@
 		    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
 		    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 	        
-	   	 	<script th:inline="javascript">
+	   	 	<script>
 	  			$(function (){
 					$('.timepicker').timepicker({
 						showInputs : false
@@ -250,19 +250,19 @@
 						'info'        : false,
 						'autoWidth'   : false,
 					});
-		 			
+
 					$('#modal-info').on('show.bs.modal', function (event) {
 						var button = $(event.relatedTarget);
 						
-						var modal = $(this)
-						//modal.find('#img').attr('src', button.data('object-src'));
+						var modal = $(this);
+						//modal.find('#img').attr("src", button.data('object-imagepath'));
 						modal.find('#facultyname').html(button.data('object-facultyname'));
 						modal.find('#department').html(button.data('object-department'));
 						modal.find('#subjectname').html(button.data('object-subjectname'));
 						modal.find('#room').html(button.data('object-room'));
 						modal.find('#time').html(button.data('object-time'));
 					});
-					
+	  			
 					$('#modal-late').on('show.bs.modal', function(event){
 						var button = $(event.relatedTarget);
 						var id = button.data('object-id');

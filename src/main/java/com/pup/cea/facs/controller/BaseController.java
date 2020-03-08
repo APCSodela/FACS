@@ -57,7 +57,7 @@ public class BaseController {
 		System.out.println("CONTAINS USER ROLE: " + authorities.contains(new SimpleGrantedAuthority("ROLE_USER")));
  
 		if(isAdmin) {
-			return "redirect:/administrator/view-users";
+			return "redirect:/administrator/account/view";
 		} else if(isChecker) {
 			return "redirect:/daily/checklist";
 		} else if(isDept) {
