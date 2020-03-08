@@ -6,36 +6,34 @@
 	    <meta charset="UTF-8">
 	    <title>Daily | Checklist</title>
 	
-	    <th:block layout:fragment="local-styles">
-			<!-- Bootstrap Time Picker -->
-			<link rel="stylesheet" href="/plugins/timepicker/bootstrap-timepicker.min.css">
-			<!-- JQuery DataTable Css -->
-			<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-			<!-- Custom JQueryDT Style -->
-			<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
-			
-			<style>
-				td {
-					vertical-align: middle !important;
-					text-align: center;
-				}
-				td img {
-					display: block;
-				    margin-left: auto;
-				    margin-right: auto;
-				}
-	            th {
-					text-align: center;
-					color: white;
-					background-color: #202020;
-					padding-right: 0px !important;
-					padding-left: 0px !important;
-				}
-				tr {
-					text-align: center;
-				}
-			</style>
-	    </th:block>
+		<!-- Bootstrap Time Picker -->
+		<link rel="stylesheet" href="/plugins/timepicker/bootstrap-timepicker.min.css">
+		<!-- JQuery DataTable Css -->
+		<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+		<!-- Custom JQueryDT Style -->
+		<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
+		
+		<style>
+			td {
+				vertical-align: middle !important;
+				text-align: center;
+			}
+			td img {
+				display: block;
+			    margin-left: auto;
+			    margin-right: auto;
+			}
+            th {
+				text-align: center;
+				color: white;
+				background-color: #202020;
+				padding-right: 0px !important;
+				padding-left: 0px !important;
+			}
+			tr {
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
         <div class="content-wrapper" layout:fragment="content">
@@ -80,16 +78,15 @@
 									<td th:text="${checklist.room}">Room</td>
 									<td th:text="${checklist.timestart} + ' to ' + ${checklist.timeend}">Time</td>
 									<td>
-										<a class="btn" data-toggle="modal" 
-											th:attr="data-object-imageSRC=@{${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() !=null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getIconImage()} : '/dist/img/default-50x50.gif'},
-													 data-object-facultyName=${checklist.facultyname}, 
+										<a class="btn" data-toggle="modal"
+											th:attr="data-object-facultyname=${checklist.facultyname},
 													 data-object-department=${checklist.department},
-													 data-object-subjectName=${checklist.subjectname},
+													 data-object-subjectname=${checklist.subjectname},
 													 data-object-room=${checklist.room},
 													 data-object-time=${checklist.timestart} + '-' + ${checklist.timeend},
 													 data-target='#modal-info'">
 											<img class="img-circle img-responsive"
-												th:src="@{${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() !=null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getIconImage()} : '/dist/img/default-50x50.gif'}"
+												th:src="@{${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() != null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getIconImage()} : '/dist/img/default-50x50.gif'}"
 												alt="Faculty Profile Picture" width="100px" height="100px">
 										</a>
 										<div class="modal fade" id="modal-info">
@@ -101,12 +98,13 @@
 											      	</div>
 									              	<div class="modal-body">
 														<div class="box-body box-primary">
-															<img class="profile-user-img img-responsive img-circle" alt="User profile picture" id="image">
-															<h3 class="profile-username text-center" id="facultyName">Faculty Name</h3>
-															<p class="text-muted text-center" id="facultyName">Department</p>
+															<img class="profile-user-img img-responsive img-circle" alt="User profile picture"
+															th:src="@{${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() != null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getIconImage()} : '/dist/img/default-50x50.gif'}">
+															<h3 class="profile-username text-center" id="facultyname">Faculty Name</h3>
+															<p class="text-muted text-center" id="department">Department</p>
 															<div class="list-group list-group-unbordered">
 																<div class="list-group-item list-group-item-info">
-																	<span id="subjectName">Subject Name</span>
+																	<span id="subjectname">Subject Name</span>
 																</div>
 																<small class="text-info"><strong><i>Subject</i></strong></small>
 																<div class="list-group-item list-group-item-info">
@@ -238,7 +236,7 @@
 		    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
 		    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 	        
-	   	 	<script>
+	   	 	<script th:inline="javascript">
 	  			$(function (){
 					$('.timepicker').timepicker({
 						showInputs : false
@@ -255,20 +253,14 @@
 		 			
 					$('#modal-info').on('show.bs.modal', function (event) {
 						var button = $(event.relatedTarget);
-						var imageSRC = button.data('object-imageSRC');
-						var facultyName = button.data('object-facultyName');
-						var department = button.data('object-department');
-						var subjectName = button.data('object-subjectName');
-						var room = button.data('object-room');
-						var time = button.data('object-time');
 						
 						var modal = $(this)
-						modal.find('#image').attr('src', imageSRC);
-						modal.find('#facultyName').text(facultyName);
-						modal.find('#department').text(department);
-						modal.find('#subjectName').text(subjectName);
-						modal.find('#room').text(room);
-						modal.find('#time').text(time);
+						//modal.find('#img').attr('src', button.data('object-src'));
+						modal.find('#facultyname').html(button.data('object-facultyname'));
+						modal.find('#department').html(button.data('object-department'));
+						modal.find('#subjectname').html(button.data('object-subjectname'));
+						modal.find('#room').html(button.data('object-room'));
+						modal.find('#time').html(button.data('object-time'));
 					});
 					
 					$('#modal-late').on('show.bs.modal', function(event){

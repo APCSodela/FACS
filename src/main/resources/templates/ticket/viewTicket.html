@@ -6,31 +6,28 @@
 		<meta charset="UTF-8">
 		<title>Tickets | View</title>
 		
-		<th:block layout:fragment="local-styles">
-			<!-- JQuery DataTable Css -->
-			<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-			<!-- Custom JQueryDT Style -->
-			<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
-			
-			<style>
-				td {
-					vertical-align: middle !important;
-					margin-left: auto;
-				    margin-right: auto;
-				}
-				th {
-					text-align: center;
-					color: white;
-					background-color: #202020;
-					padding-right: 0px !important;
-					padding-left: 0px !important;
-				}
-				tr {
-					text-align: center;
-				}
-			</style>
-		    
-		</th:block>
+		<!-- JQuery DataTable Css -->
+		<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+		<!-- Custom JQueryDT Style -->
+		<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
+		
+		<style>
+			td {
+				vertical-align: middle !important;
+				margin-left: auto;
+			    margin-right: auto;
+			}
+			th {
+				text-align: center;
+				color: white;
+				background-color: #202020;
+				padding-right: 0px !important;
+				padding-left: 0px !important;
+			}
+			tr {
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="content-wrapper" layout:fragment="content">
@@ -73,9 +70,17 @@
 									<td th:text="*{ticket.timediff}">Time of Absence (in hours)</td>
 									<td>
 										<div class="btn-group">
-											<a data-toggle="modal" data-target="#modal-info" class="btn btn-sm btn-info btn-flat">
-					                      		<i class="fa fa-info-circle"></i>
-					                      	</a>
+											<a class="btn btn-sm btn-info btn-flat" data-toggle="modal"
+												th:attr="data-object-facultyname=${ticket.facultyname},
+														 data-object-email=${ticket.email},
+														 data-object-dateday=${ticket.date} + ' - ' + ${ticket.day},
+														 data-object-room=${ticket.room},
+														 data-object-time=${ticket.timestart} + '-' + ${ticket.timeend},
+														 data-object-remark=${ticket.remark},
+														 data-object-absence=${ticket.timediff},
+														 data-target='#modal-info'">
+												<i class="fa fa-info-circle"></i>
+											</a>
 					                      	<div class="modal fade" id="modal-info">
 									        	<div class="modal-dialog modal-sm">
 									            	<div class="modal-content">
@@ -85,27 +90,27 @@
 												      	</div>
 										              	<div class="modal-body">
 															<div class="box-body box-primary">
-																<h3 class="profile-username text-center" th:text="${ticket.facultyname}">Faculty Name</h3>
-																<p class="text-muted text-center" th:text="${ticket.email}">Department</p>
+																<h3 class="profile-username text-center" id="facultyname">Faculty Name</h3>
+																<p class="text-muted text-center" id="email">Email</p>
 																<div class="list-group list-group-unbordered">
 																	<div class="list-group-item list-group-item-info">
-																		<span th:text="${ticket.date} + ' - ' + ${ticket.day}">Date - Day</span>
+																		<span id="dateday">Date - Day</span>
 																	</div>
 																	<small class="text-info"><strong><i>Date - Day</i></strong></small>
 																	<div class="list-group-item list-group-item-info">
-																		<span th:text="${ticket.room}">Room</span>
+																		<span id="room">Room</span>
 																	</div>
 																	<small class="text-info"><strong><i>Room</i></strong></small>
 																	<div class="list-group-item list-group-item-info">
-																		<span th:text="${ticket.timestart} + '-' + ${ticket.timeend}">Time</span>
+																		<span id="time">Time</span>
 																	</div>
 																	<small class="text-info"><strong><i>Time</i></strong></small>
 																	<div class="list-group-item list-group-item-info">
-																		<span th:text="${ticket.remark}">Remark</span>
+																		<span id="remark">Remark</span>
 																	</div>
 																	<small class="text-info"><strong><i>Remark</i></strong></small>
 																	<div class="list-group-item list-group-item-info">
-																		<span th:text="${ticket.timediff}">Time of Absence</span>
+																		<span id="absence">Time of Absence</span>
 																	</div>
 																	<small class="text-info"><strong><i>Time of Absence (in hours)</i></strong></small>
 																</div>
@@ -185,6 +190,19 @@
 						'ordering'    : false,
 						'info'        : true,
 						'autoWidth'   : false
+					});
+					
+					$('#modal-info').on('show.bs.modal', function (event) {
+						var button = $(event.relatedTarget);
+						
+						var modal = $(this);
+						modal.find('#facultyname').html(button.data('object-facultyname'));
+						modal.find('#email').html(button.data('object-email'));
+						modal.find('#dateday').html(button.data('object-dateday'));
+						modal.find('#room').html(button.data('object-room'));
+						modal.find('#time').html(button.data('object-time'));
+						modal.find('#remark').html(button.data('object-remark'));
+						modal.find('#absence').html(button.data('object-absence'));
 					});
 					
 					$('#modal-report').on('show.bs.modal', function(event){
