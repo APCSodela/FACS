@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pup.cea.facs.dao.faculty.FacultyRepository;
+import com.pup.cea.facs.dao.FacultyRepository;
 import com.pup.cea.facs.model.Faculty;
 
 

@@ -12,6 +12,8 @@ public class Ticket {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String email;
+	private String firstname;
+	private String lastname;
 	private String facultyname;
 	private int room;
 	private String day;
@@ -34,6 +36,18 @@ public class Ticket {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getFirstname() {
+		return firstname;
+	}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 	public String getFacultyname() {
 		return facultyname;

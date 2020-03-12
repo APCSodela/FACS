@@ -1,4 +1,4 @@
-package com.pup.cea.facs.dao.ticket;
+package com.pup.cea.facs.dao;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pup.cea.facs.dao.daily.ScheduleRepository;
+import com.pup.cea.facs.dao.ScheduleRepository;
 import com.pup.cea.facs.model.Schedule;
 
 @Service

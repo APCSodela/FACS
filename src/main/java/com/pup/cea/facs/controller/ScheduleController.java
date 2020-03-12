@@ -79,6 +79,8 @@ public class ScheduleController {
 		
 		ticket.setDate(getCurrentDate());
 		ticket.setEmail(schedule.getEmail());
+		ticket.setFirstname(schedule.getFirstname());
+		ticket.setLastname(schedule.getLastname());
 		ticket.setFacultyname(schedule.getFacultyname());
 		ticket.setRoom(schedule.getRoom());
 		ticket.setDay(schedule.getDay());
@@ -105,6 +107,8 @@ public class ScheduleController {
 		
 		ticket.setDate(getCurrentDate());
 		ticket.setEmail(schedule.getEmail());
+		ticket.setFirstname(schedule.getFirstname());
+		ticket.setLastname(schedule.getLastname());
 		ticket.setFacultyname(schedule.getFacultyname());
 		ticket.setRoom(schedule.getRoom());
 		ticket.setDay(schedule.getDay());
@@ -132,6 +136,8 @@ public class ScheduleController {
 		
 		ticket.setDate(getCurrentDate());
 		ticket.setEmail(schedule.getEmail());
+		ticket.setFirstname(schedule.getFirstname());
+		ticket.setLastname(schedule.getLastname());
 		ticket.setFacultyname(schedule.getFacultyname());
 		ticket.setRoom(schedule.getRoom());
 		ticket.setDay(schedule.getDay());

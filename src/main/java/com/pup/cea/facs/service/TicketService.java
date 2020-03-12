@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.opencsv.CSVWriter;
-import com.pup.cea.facs.dao.ticket.TicketRepository;
+import com.pup.cea.facs.dao.TicketRepository;
 import com.pup.cea.facs.model.Ticket;
 
 @Service
@@ -64,10 +64,10 @@ public class TicketService {
 			
 			List<String[]> data = new ArrayList<String[]>();
 			
-			data.add(new String[] {"Faculty Name", "Date", "Time of Absence (in hours)", "Remark"});
+			data.add(new String[] {"Lastname", "Firstname", "Date", "Time of Absence (in hours)", "Remark"});
 			
 			for(Ticket ticket: tickets) {
-				data.add(new String[] {ticket.getFacultyname(), ticket.getDate(), String.valueOf(ticket.getTimediff()), ticket.getRemark()});
+				data.add(new String[] {ticket.getLastname(), ticket.getFirstname(), ticket.getDate(), String.valueOf(ticket.getTimediff()), ticket.getRemark()});
 			}
 			
 			writer.writeAll(data);

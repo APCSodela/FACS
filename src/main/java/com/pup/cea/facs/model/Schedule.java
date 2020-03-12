@@ -18,6 +18,8 @@ public class Schedule {
 	private long id;
 	private String email;
 	private String department;
+	private String firstname;
+	private String lastname;
 	private String facultyname;
 	private String subjectname;
 	private int room;
@@ -57,6 +59,18 @@ public class Schedule {
 	}
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+	public String getFirstname() {
+		return firstname;
+	}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 	public String getFacultyname() {
 		return facultyname;

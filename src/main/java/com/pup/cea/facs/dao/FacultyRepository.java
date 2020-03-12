@@ -1,4 +1,4 @@
-package com.pup.cea.facs.dao.faculty;
+package com.pup.cea.facs.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

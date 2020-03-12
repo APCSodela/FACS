@@ -174,6 +174,8 @@ public class FacultyController {
 			int roomNumber;
 			schedule.setEmail(faculty.getEmail());
 			schedule.setDepartment(faculty.getDepartment());
+			schedule.setFirstname(faculty.getFirstname());
+			schedule.setLastname(faculty.getLastname());
 			schedule.setFacultyname(faculty.getFullname());
 			schedule.setSubjectname(loadForm.getLoad().getSubjectName());
 			if(loadForm.getLoadDetails().get(i).getRoomNumber()=="") {

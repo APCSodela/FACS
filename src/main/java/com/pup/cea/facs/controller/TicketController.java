@@ -67,7 +67,7 @@ public class TicketController {
 			}
 		}
 		
-		return "redirect:/ticket/view";
+		return "/ticket/viewTicket";
 	}
 	
 	// Action to Download the Report
@@ -90,7 +90,7 @@ public class TicketController {
 				}
 				inputStream.close();
 				outputStream.close();
-				file.delete();
+				//file.delete();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
