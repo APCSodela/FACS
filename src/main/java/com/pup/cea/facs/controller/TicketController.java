@@ -54,8 +54,8 @@ public class TicketController {
 	@RequestMapping(value="/report")
 	public String generateReport(HttpServletRequest request, HttpServletResponse response) {
 		
-		List<Ticket> tickets = service.getAllPendingTickets();
-		boolean isFlag = service.generateReport(tickets, context);
+		List<Ticket> tickets = service.getAllSortedTicketsByLastname();
+		boolean isFlag = service.generateReport(tickets, context); // Method to Generate Report
 		
 		if(isFlag) {
 			String fullPath = request.getServletContext().getRealPath("resources/reports/"+"tickets.csv");
@@ -67,7 +67,7 @@ public class TicketController {
 			}
 		}
 		
-		return "/ticket/viewTicket";
+		return "redirect:/view";
 	}
 	
 	// Action to Download the Report
@@ -90,7 +90,9 @@ public class TicketController {
 				}
 				inputStream.close();
 				outputStream.close();
-				//file.delete();
+				file.delete();
+				
+				return;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

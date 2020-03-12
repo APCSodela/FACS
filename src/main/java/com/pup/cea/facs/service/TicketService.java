@@ -48,6 +48,10 @@ public class TicketService {
 	}
 	
 	// RELATED TO GENERATING CSV REPORT
+	public List<Ticket> getAllSortedTicketsByLastname() {
+		return repo.getAllSortedTicketsByLastname();
+	}
+	
 	public boolean generateReport(List<Ticket> tickets, ServletContext context) {
 		
 		String filePath = context.getRealPath("/resources/reports");
@@ -64,11 +68,40 @@ public class TicketService {
 			
 			List<String[]> data = new ArrayList<String[]>();
 			
-			data.add(new String[] {"Lastname", "Firstname", "Date", "Time of Absence (in hours)", "Remark"});
+			data.add(new String[] {"Faculty Name", "Date", "Remark", "Time of Absence (in hours)"});
 			
+			List<Float> absences = new ArrayList<>();
+			String facultyName = "";
+			float total = 0;
+			boolean start = true;
 			for(Ticket ticket: tickets) {
-				data.add(new String[] {ticket.getLastname(), ticket.getFirstname(), ticket.getDate(), String.valueOf(ticket.getTimediff()), ticket.getRemark()});
+				if(ticket.getFacultyname().equals(facultyName)) {
+					data.add(new String[] {"", ticket.getDate(), ticket.getRemark(), String.valueOf(ticket.getTimediff())});
+					absences.add(ticket.getTimediff());
+					
+				} else {
+					if(start) {
+						start = false;
+					} else {
+						for(Float absent: absences) {
+							total+=absent;
+						}
+						data.add(new String[] {"", "", "TOTAL:", String.valueOf(total)});
+						data.add(new String[] {"", "", "", ""});
+						total = 0;
+						absences.clear();
+					}
+					data.add(new String[] {ticket.getLastname() + ", " + ticket.getFirstname(), ticket.getDate(), ticket.getRemark(), String.valueOf(ticket.getTimediff())});
+					facultyName = ticket.getFacultyname();
+					absences.add(ticket.getTimediff());
+				}
 			}
+			for(Float absent: absences) {
+				total+=absent;
+			}
+			data.add(new String[] {"", "", "TOTAL:", String.valueOf(total)});
+			data.add(new String[] {"", "", "", ""});
+			absences.clear();
 			
 			writer.writeAll(data);
 			writer.close();
