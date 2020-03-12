@@ -6,7 +6,7 @@
 		<meta charset="ISO-8859-1">
 		<title>Records | View</title>
 		
-		<!-- JQuery DataTable Css -->
+		<!-- JQuery DataTable Style -->
 		<link href="/facs/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 		<!-- Custom JQueryDT Style -->
 		<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
@@ -70,64 +70,58 @@
 									<td th:text="*{record.remark}">Remark</td>
 									<td th:text="*{record.timediff}">Time of Absence (in hours)</td>
 									<td>
-										<div class="btn-group">
-											<a class="btn btn-sm btn-info btn-flat" data-toggle="modal"
-												th:attr="data-object-facultyname=${record.facultyname},
-														 data-object-email=${record.email},
-														 data-object-dateday=${record.date} + ' - ' + ${record.day},
-														 data-object-room=${record.room},
-														 data-object-time=${record.timestart} + '-' + ${record.timeend},
-														 data-object-remark=${record.remark},
-														 data-object-absence=${record.timediff},
-														 data-target='#modal-info'">
-												<i class="fa fa-info-circle"></i>
-											</a>
-					                      	<div class="modal fade" id="modal-info">
-									        	<div class="modal-dialog modal-sm">
-									            	<div class="modal-content">
-									            		<div class="modal-header" style="background-color: #367FA9;">
-													        <button type="button" class="close" data-dismiss="modal">&times;</button>
-													    	<span class="modal-title" style="color: white;"><strong>I N F O R M A T I O N</strong></span>
-												      	</div>
-										              	<div class="modal-body">
-															<div class="box-body box-primary">
-																<h3 class="profile-username text-center" id="facultyname">Faculty Name</h3>
-																<p class="text-muted text-center" id="email">Email</p>
-																<div class="list-group list-group-unbordered">
-																	<div class="list-group-item list-group-item-info">
-																		<span id="dateday">Date - Day</span>
-																	</div>
-																	<small class="text-info"><strong><i>Date - Day</i></strong></small>
-																	<div class="list-group-item list-group-item-info">
-																		<span id="room">Room</span>
-																	</div>
-																	<small class="text-info"><strong><i>Room</i></strong></small>
-																	<div class="list-group-item list-group-item-info">
-																		<span id="time">Time</span>
-																	</div>
-																	<small class="text-info"><strong><i>Time</i></strong></small>
-																	<div class="list-group-item list-group-item-info">
-																		<span id="remark">Remark</span>
-																	</div>
-																	<small class="text-info"><strong><i>Remark</i></strong></small>
-																	<div class="list-group-item list-group-item-info">
-																		<span id="absence">Time of Absence</span>
-																	</div>
-																	<small class="text-info"><strong><i>Time of Absence (in hours)</i></strong></small>
+										<a class="btn btn-sm btn-info btn-flat" data-toggle="modal"
+											th:attr="data-object-facultyname=${record.facultyname},
+													 data-object-email=${record.email},
+													 data-object-dateday=${record.date} + ' - ' + ${record.day},
+													 data-object-room=${record.room},
+													 data-object-time=${record.timestart} + '-' + ${record.timeend},
+													 data-object-remark=${record.remark},
+													 data-object-absence=${record.timediff},
+													 data-target='#modal-info'">
+											<i class="fa fa-info-circle"></i>
+										</a>
+				                      	<div class="modal fade" id="modal-info">
+								        	<div class="modal-dialog modal-sm">
+								            	<div class="modal-content">
+								            		<div class="modal-header" style="background-color: #367FA9;">
+												        <button type="button" class="close" data-dismiss="modal">&times;</button>
+												    	<span class="modal-title" style="color: white;"><strong>I N F O R M A T I O N</strong></span>
+											      	</div>
+									              	<div class="modal-body">
+														<div class="box-body box-primary">
+															<h3 class="profile-username text-center" id="facultyname">Faculty Name</h3>
+															<p class="text-muted text-center" id="email">Email</p>
+															<div class="list-group list-group-unbordered">
+																<div class="list-group-item list-group-item-info">
+																	<span id="dateday">Date - Day</span>
 																</div>
+																<small class="text-info"><strong><i>Date - Day</i></strong></small>
+																<div class="list-group-item list-group-item-info">
+																	<span id="room">Room</span>
+																</div>
+																<small class="text-info"><strong><i>Room</i></strong></small>
+																<div class="list-group-item list-group-item-info">
+																	<span id="time">Time</span>
+																</div>
+																<small class="text-info"><strong><i>Time</i></strong></small>
+																<div class="list-group-item list-group-item-info">
+																	<span id="remark">Remark</span>
+																</div>
+																<small class="text-info"><strong><i>Remark</i></strong></small>
+																<div class="list-group-item list-group-item-info">
+																	<span id="absence">Time of Absence</span>
+																</div>
+																<small class="text-info"><strong><i>Time of Absence (in hours)</i></strong></small>
 															</div>
 														</div>
-									            	</div>
-									            	<!-- /.modal-content -->
-									          	</div>
-									          	<!-- /.modal-dialog -->
-								        	</div>
-									        <!-- /.modal -->
-											<a th:disabled="${record.status == 'Declined'} ? 'true' : 'false'" th:href="@{'/record/view/' + ${record.id} + '/waive'}" class="btn btn-sm btn-primary btn-flat">
-												<i class="fa fa-ticket"></i> Waive
-											</a>
-					                    </div>
-					                    
+													</div>
+								            	</div>
+								            	<!-- /.modal-content -->
+								          	</div>
+								          	<!-- /.modal-dialog -->
+							        	</div>
+								        <!-- /.modal -->
 				                    </td>
 								</tr>
 							</tbody>	
@@ -159,8 +153,6 @@
 			
 			<script>
 				$(function () {
-					//Datemask2 mm/dd/yyyy
-					$('.datemask2').inputmask('mm/dd/yyyy', {'placeholder' : 'mm/dd/yyyy'});
 					
 					$('#ticketTable').DataTable({
 		       			'paging'      : false,
@@ -182,10 +174,6 @@
 						modal.find('#time').html(button.data('object-time'));
 						modal.find('#remark').html(button.data('object-remark'));
 						modal.find('#absence').html(button.data('object-absence'));
-					});
-					
-					$("#confirmReport").click(function() {
-						$("#reportForm").submit();
 					});
 					
 				});

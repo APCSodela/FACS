@@ -11,41 +11,20 @@
 		<!-- Custom JQueryDT Style -->
 		<link rel="stylesheet" href="/facs/css/Jquery-dataTable.css"/>
 		<style>
-			.my-box-body{
-			    border-top-left-radius: 0;
-			    border-top-right-radius: 0;
-			    border-bottom-right-radius: 3px;
-			    border-bottom-left-radius: 3px;
-			    padding: 10px;
-			}
-			.widget-user-2 .widget-user-header{
-    			padding:5px 15px 5px 15px;
-    			margin:0px;
-    		}
-    		.widget-user-2 .widget-user-image>img{
-    			width: 45px;
-    			height:auto;
-    			float:left;
-    			padding-top:5px;
-    		}
-    		.box{
-    		    position: relative;
-			    background: #ffffff;
+			.box{
 			    margin-bottom: 0px;
-			    width: 100%;
     		}
-    		.widget-user-2 .widget-user-username{
-    		    margin-top: 5px;
-			    margin-bottom: 5px;
-			    font-size: 22px;
-			    font-weight: 300;
+			.widget-user-header{
+    			padding: 5px 15px !important;
+    			background-color: #222D32;
+    			color: #EEEEEE;
+    		}
+    		.widget-user-image>img{
+    			width: 50px !important;
     		}
     		.btn-box-tool {
-			    padding: 5px;
-			    font-size: 12px;
-			    background: transparent;
-			    color: #f6f6f6;
-			}
+    			color: #EEEEEE;
+    		}
 		</style>
 	</head>
 	<body>
@@ -67,12 +46,12 @@
                   | Your Page Content Here |
                   -------------------------->
 				<div class="box box-primary">
-					<div class="my-box-body table-responsive">
+					<div class="box-body">
 						<table id="facultyTable" class="table table-bordered table-striped table-hover dataTable">
 			             	<thead>
 			             		<tr>
 			             			<th>
-			             				Faculties
+			             				
 			             			</th>
 			             		</tr>
 			             	</thead>
@@ -83,7 +62,7 @@
 												<!-- Widget: user widget style 1 -->
 												<div id="facultyCard" class="box box-widget widget-user-2 collapsed-box">
 													<!-- Add the bg color to the header using any of the bg-* classes -->
-													<div class="widget-user-header bg-light-blue">
+													<div class="widget-user-header">
 														<div class="widget-user-image">
 															<img class="img-circle"  th:src="@{${faculty.getImagedata()!=null} ? ${faculty.getIconImage()} : '/dist/img/default-50x50.gif'}" alt="User Avatar">
 														</div>
@@ -102,7 +81,7 @@
 															
 															<a data-toggle="modal" th:attr="data-object-id=${faculty.id}, data-object-name=${faculty.fullname}, data-target='#modal-remove'">
 																<button type="button" class="btn btn-box-tool">
-																	<i class="fa fa-trash"></i>
+																	<i class="fa fa-trash" style="color: red;"></i>
 																</button>
 															</a>
 															<div class="modal modal-danger fade" id="modal-remove">
@@ -132,7 +111,7 @@
 													        <!-- /.modal -->
 														</div>
 														<!-- /.widget-user-image -->
-														<h4 th:text="${faculty.fullname}" class="widget-user-username">FACULTY FULLNAME</h4>
+														<h6 th:text="${faculty.fullname}" class="widget-user-username">FACULTY FULLNAME</h6>
 														<h6 th:text="${faculty.department}" class="widget-user-desc">FACULTY DEPT</h6>
 													</div>
 													<div class="box-footer no-padding">

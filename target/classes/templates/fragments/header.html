@@ -23,9 +23,9 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" style="font-size: 16px">
                        &nbsp&nbsp<i class="fa fa-chevron-down"></i>
                     </a>
-                    <ul class="dropdown-menu" style="border: none !important;">
+                    <ul class="dropdown-menu" style="border: none !important; box-shadow: 0px 3px 3px #101010; " >
                         <!-- The user image in the menu -->
-                        <li class="user-header" style="background-color: #650006;">
+                        <li class="user-header" style="background-color: #1A2226;">
                             <img class="img-circle"  
 								th:src="@{${#authentication.principal.imagedata !=null } ? ${#authentication.principal.getIconImage()} : '/dist/img/default-50x50.gif'}"
 								alt="User Avatar">
@@ -36,9 +36,9 @@
                            	</p>
                         </li>
                         <!-- Menu Footer-->
-                        <li class="user-footer" style="background-color: #4B3832;">
+                        <li class="user-footer" style="background-color: #222D32;">
                             <div style="text-align: center;">
-                                <a href="/logout" class="btn btn-block btn-flat" style="background-color: #202020; border-radius: 8px; color: white;'"><strong>LOGOUT</strong></a>
+                                <a href="/logout" class="btn btn-block btn-flat" style="background-color: maroon; border-radius: 8px; color: white;'"><strong>LOGOUT</strong></a>
                             </div>
                         </li>
                     </ul>

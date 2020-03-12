@@ -22,31 +22,33 @@
 				color: white;
 			}
 			.login-button {
-				background-color: #202020;
+				background-color: green;
 				border-radius: 8px;
+			}
+			input {
+				border-radius: 8px !important;		
 			}
 		</style>
 
 	</head>
 	<body class="hold-transition login-page" style="background-color: maroon;">
-		<div class="login-box">
+		<div class="login-box"  style="box-shadow: 0px 8px 8px #101010; background-color: #222D32; border-radius: 20px; padding: 20px 10px 10px 10px;">
 			<div class="login-logo text-wh" style="text-shadow: 0px 4px 4px #101010;">
 				<img class="profile-user-img img-responsive img-circle" src="../dist/img/facs-logo.png" alt="FACS LOGO" 
 					style="border: 2px solid white;"> 
 				<b>
-					FACULTY ATTENDANCE
-					<small>CHECKER SYSTEM</small>
+					<small>FACULTY ATTENDANCE CHECKER SYSTEM</small>
 				</b>
 			</div>
 			<!-- /.login-logo -->
 			<div th:if="${loginError}" class="row">
 				<!-- /.col -->
-				<div class="col-xs-12 col-lg-12 alert alert-danger" align="center">
+				<div class="col-xs-12 col-lg-12 alert alert-danger" align="center" style="box-shadow: 0px 3px 3px #101010;">
 					<i class="fa fa-warning"></i><span><strong> BAD CREDENTIALS:</strong><br>Incorrect username and/or password</span>
 				</div>
 				<!-- /.col -->
 			</div>
-			<div class="login-box-body" style="box-shadow: 0px 8px 8px #101010; background-color: #4B3832; border-radius: 8px;">
+			<div class="login-box-body" style="background-color: #222D32;">
 				<form action="login" method="post">
 					<div class="form-group has-feedback">
 						<input name="username" type="text" class="form-control" placeholder="Username" required> 
