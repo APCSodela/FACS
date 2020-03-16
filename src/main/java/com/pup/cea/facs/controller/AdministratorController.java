@@ -3,8 +3,6 @@ package com.pup.cea.facs.controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,50 +29,38 @@ public class AdministratorController {
 	@Autowired
 	private TicketService ticketService;
 	
-	@RequestMapping(value="/home",method=RequestMethod.GET)
-	public String adminHome() {
-		return "administrator/administratorHome";
-	}
+	// Action to show View Accounts Page
 	@RequestMapping(value="/account/view")
-	public String viewUsers(Model model) {
-		model.addAttribute("userList",userService.findUsers());
-		return "administrator/viewUsers";
+	public String viewAccounts(Model model) {
+		List<UserLogin> users = userService.findUsers();
+		
+		model.addAttribute("userList", users);
+		return "administrator/viewAccount";
 	}
+	
+	// Action to show Add Account Page
 	@RequestMapping(value="/account/add")
-	public String addUser(Model model) {
+	public String addAccount(Model model) {
 		
 		UserLogin userLogin = new UserLogin();
 		UserInfo userInfo = new UserInfo();
 		model.addAttribute("userObject", userLogin);
 		model.addAttribute("userInfoObject", userInfo);
 		
-		return "administrator/addUser";
+		return "administrator/addAccount";
 	}
-	@RequestMapping(value="/save-user", method=RequestMethod.POST)
-	public String saveUser(@ModelAttribute("userObject") UserLogin userLogin,
-						   @ModelAttribute("userInfoObject") UserInfo userInfo,
-						   @RequestParam("imagefile") MultipartFile file,
-							HttpServletRequest req) throws IOException  {
+	// Action to Save an Account
+	@RequestMapping(value="/account/save", method=RequestMethod.POST)
+	public String saveAccount(@ModelAttribute("userObject") UserLogin userLogin,
+						   		@ModelAttribute("userInfoObject") UserInfo userInfo,
+						   		@RequestParam("imagefile") MultipartFile file) throws IOException  {
+		// For UserLogin
 		BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+		String encodedPassword = bCrypt.encode(userLogin.getPassword());
+		userLogin.setPassword(encodedPassword);
 		
-		//this is if the user is being updated
-		if (userLogin.getId()!=0 && userLogin.getPassword()==null) {
-			userLogin.setPassword(userService.findUser(userLogin.getId()).getPassword());
-		} else {
-			String encodedPassword = bCrypt.encode(userLogin.getPassword());
-			userLogin.setPassword(encodedPassword);
-		}
-		
+		// For UserInfo
 		if(file.getSize()==0) {
-//			if (userService.findUser(userLogin.getId()).getUserInfo().getImagedata()!=null) {
-//				userInfo.setImagedata(userService.findUser(userLogin.getId()).getUserInfo().getImagedata());
-//				userInfo.setImagesize(userService.findUser(userLogin.getId()).getUserInfo().getImagesize());
-//				userInfo.setContenttype(userService.findUser(userLogin.getId()).getUserInfo().getContenttype());
-//			} else {
-//				userInfo.setImagedata(null);
-//				userInfo.setContenttype(null);
-//				userInfo.setImagesize(null);
-//			}
 			userInfo.setImagedata(null);
 			userInfo.setContenttype(null);
 			userInfo.setImagesize(null);
@@ -89,21 +75,65 @@ public class AdministratorController {
 		userService.saveUser(userLogin);
 		userService.saveUserInfo(userInfo);
 		
-		return "redirect:/administrator/view-users";
+		return "redirect:/administrator/account/view";
 	}
-	@RequestMapping("/user-profile/{userId}/edit")
+	// Action to show Edit Account Page
+	@RequestMapping("/account/{userId}/edit")
 	public String editUser(@PathVariable("userId") Long userId,
-						   Model model) {
+						   	Model model) {
 		
 		UserLogin userLogin = userService.findUser(userId);
 		
 		model.addAttribute("userObject", userLogin);
 		model.addAttribute("userInfoObject", userLogin.getUserInfo());
 		
-		return "administrator/addUser";
-				
+		return "administrator/editAccount";
 	}
-	@RequestMapping("/user-profile/{userId}/remove")
+	// Action to Edit an Account
+	@RequestMapping(value="/account/edit")
+	public String updateAccount(@ModelAttribute("userObject") UserLogin userLogin,
+						   			@ModelAttribute("userInfoObject") UserInfo userInfo,
+						   			@RequestParam("imagefile") MultipartFile file) throws IOException  {
+		// For UserLogin
+			// For Password (If Updating)
+		userLogin.setId(userLogin.getId());
+		userLogin.setUsername(userLogin.getUsername());
+		userLogin.setRole(userLogin.getRole());
+		BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+		if (userLogin.getPassword()==null) {
+			userLogin.setPassword(userService.findUser(userLogin.getId()).getPassword());
+		} else {
+			String encodedPassword = bCrypt.encode(userLogin.getPassword());
+			userLogin.setPassword(encodedPassword);
+		}
+		
+		// For UserInfo
+		userInfo.setId(userLogin.getId());
+		if(file.getSize()==0) {
+			if (userService.findUser(userLogin.getId()).getUserInfo().getImagedata()!=null) {
+				userInfo.setImagedata(userService.findUser(userLogin.getId()).getUserInfo().getImagedata());
+				userInfo.setImagesize(userService.findUser(userLogin.getId()).getUserInfo().getImagesize());
+				userInfo.setContenttype(userService.findUser(userLogin.getId()).getUserInfo().getContenttype());
+			} else {
+				userInfo.setImagedata(null);
+				userInfo.setContenttype(null);
+				userInfo.setImagesize(null);
+			}
+		} else {
+			userInfo.setImagedata(file.getBytes());
+			userInfo.setContenttype(file.getContentType());
+			userInfo.setImagesize(file.getSize());
+		}
+		userInfo.setUsername(userLogin.getUsername());
+		userInfo.setUserLogin(userLogin);
+		
+		userService.saveUserInfo(userInfo);
+		userService.saveUser(userLogin);
+		
+		return "redirect:/administrator/account/view";
+	}
+	// Action to Remove an Account
+	@RequestMapping("/account/{userId}/remove")
 	public String removeUser(@PathVariable("userId") Long userId,
 						   Model model) {
 		
@@ -113,8 +143,7 @@ public class AdministratorController {
 		userService.deleteUserInfo(userInfo.getId());
 		userService.deleteUser(userId);
 		
-		return "redirect:/administrator/view-users";
-				
+		return "redirect:/administrator/account/view";
 	}
 	
 	// RELATED TO RECORDS

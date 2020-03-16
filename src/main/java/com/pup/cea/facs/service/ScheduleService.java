@@ -34,4 +34,8 @@ public class ScheduleService {
 		return repo.findByDay(day);
 	}
 	
+	public List<Schedule> findByDaySortedByRoom(String day) {
+		return repo.findByDaySortedByRoom(day);
+	}
+	
 }

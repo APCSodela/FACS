@@ -17,10 +17,13 @@
 			.widget-user-header{
     			padding: 5px 15px !important;
     			background-color: #222D32;
+    			border-radius: 10px !important;
     			color: #EEEEEE;
     		}
     		.widget-user-image>img{
     			width: 50px !important;
+    			padding: 3px;
+    			border: 2px solid #D2D6DE;
     		}
     		.btn-box-tool{
     			color: #EEEEEE;
@@ -76,7 +79,7 @@
 																<i class="fa fa-plus"></i>
 															</button>
 															
-															<a th:href="@{'/administrator/user-profile/' + ${user.id}} + '/edit'">
+															<a th:href="@{'/administrator/account/' + ${user.id}} + '/edit'">
 																<button type="button" class="btn btn-box-tool">
 																	<i class="fa fa-user"></i>
 																</button>
@@ -189,7 +192,7 @@
 						
 						var modal = $(this)
 						modal.find('.modal-body p').html('Delete <strong>' + userName + '</strong> as Account?')
-						modal.find('#confirmDelete').attr('href', "/administrator/user-profile/" + userID + "/remove")
+						modal.find('#confirmDelete').attr('href', "/administrator/account/" + userID + "/remove")
 					});
 				});
 			</script>

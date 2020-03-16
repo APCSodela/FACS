@@ -42,7 +42,7 @@ public class ScheduleController {
 	@RequestMapping(value="/schedule/{day}")
 	public String viewDailySchedulesOfTheDay(@PathVariable(name="day") String day, Model model) {
 		
-		List<Schedule> list = service.findByDay(day);
+		List<Schedule> list = service.findByDaySortedByRoom(day);
 		model.addAttribute("scheduleList", list);
 
 		return "daily/viewSchedule" ;
@@ -59,7 +59,7 @@ public class ScheduleController {
 	@RequestMapping(value="/checklist/{day}")
 	public String viewChecklistOfTheDay(@PathVariable(name="day") String day, Model model) {
 		
-		List<Schedule> list = service.findByDay(day);
+		List<Schedule> list = service.findByDaySortedByRoom(day);
 		model.addAttribute("day", day);
 		model.addAttribute("checklist", list);
 		

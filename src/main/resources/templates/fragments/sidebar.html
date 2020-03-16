@@ -53,7 +53,7 @@
                                 </li>
                                 <li>
 									<a th:href="@{/administrator/record}"> 
-                                  		<i class="fa fa-folder"></i> Records
+                                  		<i class="fa fa-folder"></i> View Records
                               		</a>
 	                          	</li>
                             </ul>
@@ -69,11 +69,13 @@
                    	    		</span>
                         	</a>
                     		<ul class="treeview-menu">
+                    			<th:block th:if="${#authorization.expression('hasRole(''ROLE_CHECKER'')')}">
 	                       		<li>
 									<a th:href="@{/daily/checklist}"> 
                                   		<i class="fa fa-edit"></i> Checklists
                               		</a>
 	                          	</li>
+	                          	</th:block>
 	                       		<li>
 	                          		<a th:href="@{/daily/schedule}">
       	                            	<i class="fa fa-calendar"></i> Schedules

@@ -79,7 +79,10 @@
 									<td th:text="${checklist.timestart} + ' to ' + ${checklist.timeend}">Time</td>
 									<td>
 										<a class="btn" data-toggle="modal"
-											th:attr="data-object-facultyname=${checklist.facultyname},
+											th:attr="data-object-hasimage=${checklist.getLoadDetail().getLoad().getFaculty().getImagedata()},
+													 data-object-imagedata=${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() != null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getBase64()} : '/dist/img/default-50x50.gif',
+													 data-object-contenttype=${checklist.getLoadDetail().getLoad().getFaculty().getContenttype()},
+													 data-object-facultyname=${checklist.facultyname},
 													 data-object-department=${checklist.department},
 													 data-object-subjectname=${checklist.subjectname},
 													 data-object-room=${checklist.room},
@@ -98,8 +101,13 @@
 											      	</div>
 									              	<div class="modal-body">
 														<div class="box-body box-primary">
-															<img class="profile-user-img img-responsive img-circle" alt="User Profile Picture"
+															<!-- 
+															<img class="profile-user-img img-responsive img-circle" id="img" alt="User Profile Picture"
 																th:src="@{${checklist.getLoadDetail().getLoad().getFaculty().getImagedata() != null} ? ${checklist.getLoadDetail().getLoad().getFaculty().getIconImage()} : '/dist/img/default-50x50.gif'}">
+															 -->
+															 <div id="facultyImage">
+															 
+															 </div>
 															<h3 class="profile-username text-center" id="facultyname">Faculty Name</h3>
 															<p class="text-muted text-center" id="department">Department</p>
 															<div class="list-group list-group-unbordered">
@@ -124,6 +132,7 @@
 								          	<!-- /.modal-dialog -->
 							        	</div>
 								        <!-- /.modal -->
+								        
 									</td>
 									<td>
 										<div class="btn-group-vertical">
@@ -236,7 +245,7 @@
 		    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
 		    <script src="/facs/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 	        
-	   	 	<script>
+	   	 	<script th:inline="javascript">
 	  			$(function (){
 					$('.timepicker').timepicker({
 						showInputs : false
@@ -250,19 +259,23 @@
 						'info'        : false,
 						'autoWidth'   : false,
 					});
-
-					$('#modal-info').on('show.bs.modal', function (event) {
+					
+					 $('#modal-info').on('show.bs.modal', function (event) {
 						var button = $(event.relatedTarget);
-						
 						var modal = $(this);
-						//modal.find('#img').attr("src", button.data('object-imagepath'));
+						
+						if(button.data('object-hasimage') != null) {
+							modal.find('#facultyImage').html('<img src="' + "data:" + button.data('object-contenttype') + ";base64," + button.data('object-imagedata') + '" class="profile-user-img img-responsive img-circle" />');
+						} else {
+							modal.find('#facultyImage').html('<img src="' + button.data('object-imagedata') + '" class="profile-user-img img-responsive img-circle" />');
+						}
 						modal.find('#facultyname').html(button.data('object-facultyname'));
 						modal.find('#department').html(button.data('object-department'));
 						modal.find('#subjectname').html(button.data('object-subjectname'));
 						modal.find('#room').html(button.data('object-room'));
 						modal.find('#time').html(button.data('object-time'));
 					});
-	  			
+					 
 					$('#modal-late').on('show.bs.modal', function(event){
 						var button = $(event.relatedTarget);
 						var id = button.data('object-id');

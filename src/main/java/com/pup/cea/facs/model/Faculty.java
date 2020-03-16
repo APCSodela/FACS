@@ -49,6 +49,10 @@ public class Faculty {
 	public String getIconImage() {
 		return "data:" + getContenttype() + ";base64," + Base64.getEncoder().encodeToString(getImagedata());
 	}
+	
+	public String getBase64() {
+		return Base64.getEncoder().encodeToString(getImagedata());
+	}
 
 	public byte[] getImagedata() {
 		return imagedata;
